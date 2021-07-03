@@ -12,7 +12,9 @@
 [![Star on GitHub][github-star-badge]][github-star]
 [![Tweet][twitter-badge]][twitter]
 
-# Electron POS
+# Introduction
+
+Bootstrap and package your project with Angular 12 and Electron 13 (Typescript + SASS + Hot Reload) for creating Desktop applications.
 
 Currently runs with:
 
@@ -56,7 +58,7 @@ npm install -g @angular/cli
 *Install NodeJS dependencies with npm (used by Electron main process):*
 
 ``` bash
-cd app/
+cp app/
 npm install
 ```
 
