@@ -7,7 +7,7 @@
       <button mat-icon-button (click)="clickDevTools()"><mat-icon>more_vert</mat-icon></button>
     </mat-toolbar>
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="0">
-      <mat-sidenav #sidenav mode="over" fixedTopGap="56">
+      <mat-sidenav #sidenav mode="side" fixedTopGap="56">
         <app-navlist (sidenavClose)="sidenav.close()"></app-navlist>
       </mat-sidenav>
       <mat-sidenav-content>
