@@ -33,7 +33,6 @@ All packages are specified under *devDependencies* since, due to the webpack usa
 Try out this [template](https://github.blog/2019-06-06-generate-new-repositories-with-repository-templates/):
 
 ```bash
-$ git clone https://github.com/frederiksen/angular-electron-boilerplate
 $ cd angular-electron-boilerplate
 $ npm install
 $ npm run build:dev:all
