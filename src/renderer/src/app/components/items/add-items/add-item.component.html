@@ -1,0 +1,26 @@
+<div>
+  <button (click)="onCreateCategory()">Create a Category</button>
+  <button (click)="onCreateItem()">Create an Item</button>
+</div>
+<div>
+  <div>
+    <form #f1="ngForm" (ngSubmit)="onAddCategory()">
+      <label>Enter the name of the category : </label>
+      <input type="text" ngModel name="cat"/>
+      <button type="submit">Add</button>
+    </form>
+  </div>
+  <div>
+    <form #f2="ngForm" (ngSubmit)="onAddItem()">
+      <label>Enter the name of the item : </label>
+      <input type="text" ngModel name="item" />
+      <label>Select the category of the item</label>
+      <select ngModel name="category">
+        <option *ngFor='let cat of categories'>{{ cat }}</option>
+      </select>
+      <label>Enter the rate of the item :</label>
+      <input type="number" ngModel name="rate" />
+      <button type="submit">Add</button>
+    </form>
+  </div>
+</div>

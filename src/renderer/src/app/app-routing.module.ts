@@ -1,19 +1,19 @@
-import { CashierComponent } from './cashier/cashier.component';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { Component1Component } from './components/component1/component1.component';
-import { Component2Component } from './components/component2/component2.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { ItemComponent } from "./components/items/item.component";
+import { BillComponent } from "./components/bills/bill.component";
+import { TableComponent } from "./components/tables/table.component";
 
 const routes: Routes = [
-  { path:  '2', component:  Component2Component },
-  {
-    path: '',
-    loadChildren: ()=>import('./cashier/cashier.module').then(m=>m.CashierModule)
-  }
+  { path: "tables", component: TableComponent },
+  { path: "items", component: ItemComponent },
+  { path: "bills", component: BillComponent },
+  //  { path: '404', component: NotfoundComponent },
+  //  { path: '**', redirectTo: '/404' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

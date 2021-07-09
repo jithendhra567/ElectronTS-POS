@@ -1,0 +1,22 @@
+.categories {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.category {
+  padding: 2% 0;
+  width: 100%;
+}
+
+.item-header {
+  font-weight: bold;
+}
+
+.item {
+  background-color: rgb(223, 241, 247);
+  margin-bottom: 1px;
+}
+
+.item:hover {
+  cursor: pointer;
+}

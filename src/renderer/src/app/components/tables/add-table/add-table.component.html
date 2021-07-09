@@ -1,0 +1,13 @@
+<form #f="ngForm" (ngSubmit)="onAddTable()">
+  <mat-form-field appearance="standard">
+    <mat-label>Enter the Table number :</mat-label>
+    <input matInput type="number" ngModel name="tNum">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" floatLabel="always">
+    <mat-label>Capacity</mat-label>
+    <input type="number" placeholder="0" matInput ngModel name="cap">
+  </mat-form-field>
+
+  <button type="submit">Add a table</button>
+</form>

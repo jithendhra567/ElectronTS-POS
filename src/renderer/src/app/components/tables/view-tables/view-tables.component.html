@@ -1,0 +1,13 @@
+<!-- <mat-grid-tile>
+    <span>{{ table.tableNumber }}</span>
+    <span>{{ table.capacity }}</span>
+</mat-grid-tile> -->
+
+<mat-grid-list  class="grid-list" cols="3" rowHeight="100px">
+  <mat-grid-tile *ngFor="let table of tableList" class="grid" colspan="1">
+    <button class="grid-item" [style.background-color]="table.reserved_status ? '#ff7f7f': 'lightgreen'" (click)="onClickTable(table.tableNumber)">
+      <div style="font-size: 1.2rem;">Table-{{table.tableNumber}}</div>
+      <div style="font-size: 2.5rem;">{{ table.capacity }}</div>
+    </button>
+  </mat-grid-tile>
+</mat-grid-list>
