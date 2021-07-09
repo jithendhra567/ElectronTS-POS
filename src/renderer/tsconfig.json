@@ -8,6 +8,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
     "importHelpers": true,
     "target": "es5", // https://github.com/electron/electron/issues/12011
     "types": [

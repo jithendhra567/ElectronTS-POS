@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CashierRoutingModule } from './cashier-routing.module';
 import { CashierComponent } from './cashier.component';
-
+import { MaterialModule } from '../material.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +11,8 @@ import { CashierComponent } from './cashier.component';
   ],
   imports: [
     CommonModule,
-    CashierRoutingModule
+    CashierRoutingModule,
+    MaterialModule
   ]
 })
 export class CashierModule { }
