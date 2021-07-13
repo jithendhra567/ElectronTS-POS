@@ -9,7 +9,8 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: ()=>import('./cashier/cashier.module').then(m=>m.CashierModule)
-  }
+  },
+  {path: '**', redirectTo: '/'}
 ];
 
 @NgModule({

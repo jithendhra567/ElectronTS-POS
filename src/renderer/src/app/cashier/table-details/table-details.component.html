@@ -1,0 +1,73 @@
+<div class="main">
+    <mat-toolbar class="tool-bar">
+        <div class="flex">    
+            <button mat-icon-button ><mat-icon>arrow_back</mat-icon></button>
+            <h1 class="example-app-name">TABLE NO. 12</h1>
+        </div>
+        <button class="add" mat-raised-button color="primary">ADD ITEM</button>
+    </mat-toolbar>
+    <div class="content">
+        <div class="list">
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="selectedItems" class="mat-elevation-z8">
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="weight">
+                        <th mat-header-cell *matHeaderCellDef> Weight </th>
+                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="symbol">
+                        <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                    </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                </table>
+                <mat-paginator #paginator2 [pageSizeOptions]="[10,20]"></mat-paginator>
+            </div>    
+        </div>
+        <div class="bill">
+            <mat-card class="billcontent">
+                <h4>POS BILLING</h4>
+                <div class="margin"></div>
+                <div class="header">
+                  <h2>HOTEL</h2>
+                  <h6>TAG LINE</h6>
+                  <p>Address: street, city, country, pincode</p>
+                </div>
+                <div class="margin" style="background-color: rgba(0, 0, 0, 0.2);"></div>
+                <div class="bill-heading">
+                  <p class="name">Item</p>
+                  <p class="cost">price</p> 
+                </div>
+                <div class="margin" style="background-color: rgba(0, 0, 0, 0.2);"></div>
+                <div class="bill-item">
+                  <p class="name">Apple   x2</p>
+                  <p class="cost">200$</p>
+                </div>
+                <div class="bill-item">
+                  <p class="name">Apple   x2</p>
+                  <p class="cost">200$</p>
+                </div>
+                <div class="bill-item">
+                  <p class="name">Apple   x2</p>
+                  <p class="cost">200$</p>
+                </div>
+                <div class="bill-item">
+                  <p class="name">Apple   x2</p>
+                  <p class="cost">200$</p>
+                </div>
+              </mat-card>
+              <button mat-raised-button color="accent">PRINT KOT</button>
+              <button mat-raised-button color="primary">CHECK OUT</button>
+              
+        </div>
+    </div>
+
+</div>

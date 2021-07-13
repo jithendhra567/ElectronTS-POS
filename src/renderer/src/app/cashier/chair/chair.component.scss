@@ -1,0 +1,13 @@
+.block{
+    width: 40px;
+    height: 30px;
+    display: flex;
+    background-color: rgb(74, 57, 226);
+    align-items: flex-end;
+    border-radius: 50%;
+    justify-content: center;
+    transition: all .5s ease-in-out;
+    &:hover{
+        box-shadow: 0 0 10px 5px rgb(0, 0, 0,0.2);
+    }
+}

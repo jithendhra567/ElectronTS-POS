@@ -1,0 +1,81 @@
+.main{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    .tool-bar{
+        width: 100%;
+        justify-content: space-between;
+        .flex{
+            display: flex;
+            align-items: center;
+        }
+        .add{
+            transform: translateX(-25px);
+        }
+    }
+    .content{
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        .list{
+            width: 70%;
+            .mat-elevation-z8{
+                margin: 10px;
+                width: 100%;    
+                table{
+                    width: 98%;
+                }
+            }
+        }
+        .bill{
+            width: 350px;
+            padding: 10px;
+            .billcontent{
+                box-shadow: 0 0 10px 5px rgb(0, 0, 0,0.2);
+                .header{
+                    text-align: center;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    h2{
+                        margin: 1px;
+                    }
+                    h6{
+                        margin: 1px;
+                    }
+                    p{
+                        margin: 2px;
+                        font-size: 12px;
+                    }
+                }
+                .margin{
+                    width: 100%;
+                    height: 1px;
+                    background-color: black;
+                }
+                .bill-item{
+                    margin-top: 10px;
+                    display: flex;
+                    justify-content: space-between;
+                    p{
+                        margin: 0;
+                        font-size: 14px;
+                    }
+                }
+                .bill-heading{
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 18px;
+                    font-weight: 500;
+                }
+            }
+            button{
+                width: 100%;
+                margin-top: 20px;
+                box-shadow: 0 0 10px 5px rgba(91, 75, 235, 0.2);
+                font-size: larger;
+                padding: 10px 0;
+            }
+        }
+    }
+}
