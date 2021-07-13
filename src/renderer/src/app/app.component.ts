@@ -7,7 +7,6 @@ import { IpcService } from './ipc.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Welcome to Hotel Point Of Sale';
 
   constructor(private ipcService: IpcService) {
   }

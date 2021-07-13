@@ -39,7 +39,7 @@ export class ItemService implements OnInit {
     this.categories.push(name);
   }
 
-  assignCategory(items, category) {
+  assignCategory(items: string[], category: string) {
     for(var i of items) {
       this.items.forEach((el, id) => {
         if(el.itemName == i) el.categoryName = category

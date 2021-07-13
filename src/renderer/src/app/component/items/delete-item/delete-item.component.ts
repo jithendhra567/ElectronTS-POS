@@ -3,8 +3,7 @@ import { MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-delete-item',
-  templateUrl: './delete-item.component.html',
-  styleUrls: ['./delete-item.component.css']
+  templateUrl: './delete-item.component.html'
 })
 
 export class DeleteItemComponent {

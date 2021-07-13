@@ -34,7 +34,6 @@
         </button>
       </div>
       <div class="section">
-        <!-- <app-view-items></app-view-items> -->
         <div class="item-table" *ngIf="canDisplay">
           <div class="table-align">
             <div class="button-container">
@@ -82,41 +81,12 @@
                 </td>
               </ng-container>
 
-              <!-- <ng-container matColumnDef="expandedDetail">
-                <td
-                  mat-cell
-                  *matCellDef="let row"
-                  [attr.colspan]="displayedColumns.length"
-                >
-                  <div
-                    class="item-detail"
-                    [@detailExpand]="
-                      row == expandedElement ? 'expanded' : 'collapsed'
-                    "
-                  >
-                    <div class="item-element">
-                      <button mat-raised-button (click)="editItem(row.itemId)">
-                        <mat-icon>edit</mat-icon>
-                      </button>
-                      <button mat-raised-button (click)="deleteItem(row.itemId)">
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </div>
-                  </div>
-                </td>
-              </ng-container> -->
-
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr
                 mat-row
                 *matRowDef="let row; columns: displayedColumns"
                 class="item-row"
               ></tr>
-              <!-- <tr
-                mat-row
-                *matRowDef="let row; columns: ['expandedDetail']"
-                class="item-detail-row"
-              ></tr> -->
               <tr class="mat-row" *matNoDataRow>
                 <td class="mat-cell" colspan="4">No data matching the filter</td>
               </tr>

@@ -1,4 +1,3 @@
-import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from "@angular/material/table";
@@ -8,7 +7,7 @@ import { AddCategoryComponent } from './add-category/add-category.component';
 import { EditCategoriesComponent } from './edit-categories/edit-categories.component';
 import { Item } from "./item.model";
 import { ItemService } from './item.service';
-import { AddItemComponent } from "./add-items/add-item.component";
+import { AddItemComponent } from "./add-item/add-item.component";
 import { EditItemComponent } from "./edit-item/edit-item.component";
 import { DeleteItemComponent } from "./delete-item/delete-item.component";
 import { AssignCategoryComponent } from "./assign-category/assign-category.component";
@@ -16,14 +15,7 @@ import { AssignCategoryComponent } from "./assign-category/assign-category.compo
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.css'],
-  // animations: [
-  //   trigger('detailExpand', [
-  //     state('collapsed', style({height: '0px', minHeight: '0'})),
-  //     state('expanded', style({height: '*'})),
-  //     transition('expanded <=> collapsed', animate('.25s ease-in'))
-  //   ])
-  // ]
+  styleUrls: ['./item.component.css']
 })
 export class ItemComponent implements OnInit {
 
@@ -34,11 +26,11 @@ export class ItemComponent implements OnInit {
   prev_cat = ''
 
   displayedColumns: string[] = ['id', 'name', 'rate', 'edit', 'delete'];
-  dataSource: MatTableDataSource<Item>;
+  dataSource!: MatTableDataSource<Item>;
   // expandedElement: Item | null
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private dialog: MatDialog, private is: ItemService) {}
 

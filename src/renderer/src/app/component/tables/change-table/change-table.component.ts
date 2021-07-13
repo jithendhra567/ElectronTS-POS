@@ -13,7 +13,7 @@ import { TableService } from "../table.service";
 export class ChangeTableComponent implements OnInit {
   myControl = new FormControl();
   options: number[] = [];
-  filteredOptions: Observable<number[]>;
+  filteredOptions!: Observable<number[]>;
 
   constructor(
     private dialogRef: MatDialogRef<ChangeTableComponent>,

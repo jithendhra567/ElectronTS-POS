@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatListOption } from "@angular/material/list";
 import { AddCategoryComponent } from "../add-category/add-category.component";
 import { ItemService } from "../item.service";
 
@@ -35,7 +36,7 @@ export class AssignCategoryComponent implements OnInit {
     })
   }
 
-  assignCategory(items, category) {
+  assignCategory(items: MatListOption[], category: string) {
     this.items = [];
     for(var i of items) {
       this.items.push(i.value)
