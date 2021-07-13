@@ -1,27 +1,21 @@
-<div class="example-container">
-  <mat-toolbar color="primary" class="example-toolbar">
-    <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
+<div class="home-container">
+  <mat-toolbar clas="home-toolbar" color="primary">
     <div class="heading">
-      <h1 class="example-app-name">{{title}}</h1>
+      <h1>Welcome to Point of Sale</h1>
     </div>
-    <!-- This fills the remaining space of the current row -->
-    <span class="fill-remaining-space"></span>
-    <button mat-icon-button (click)="clickDevTools()"><mat-icon>more_vert</mat-icon></button>
   </mat-toolbar>
   <div class="contents">
-    <button class="elements" routerLink='/tables'>Tables</button>
-    <button class="elements" routerLink="/items">Items</button>
-    <button class="elements" routerLink="/bills">Bill</button>
+    <mat-tab-group mat-stretch-tabs selectedIndex="1" class="tabs">
+      <mat-tab label="Tables">
+        <ng-template matTabContent>
+          <app-table></app-table>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Items">
+        <ng-template matTabContent>
+          <app-item></app-item>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
   </div>
-  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="0">
-    <mat-sidenav #sidenav mode="side" fixedTopGap="56">
-      <app-navlist (sidenavClose)="sidenav.close()"></app-navlist>
-    </mat-sidenav>
-    <!-- <mat-sidenav #sidenav2 mode="side" fixedTopGap='56'>
-      <app-navlist2 (sidenav2Close)="sidenav2.close()"></app-navlist2>
-    </mat-sidenav> -->
-    <mat-sidenav-content style="margin: 2% 0 0 0">
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
 </div>

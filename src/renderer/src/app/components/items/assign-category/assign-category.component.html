@@ -1,0 +1,40 @@
+<mat-form-field appearance="fill">
+  <mat-label>Select category</mat-label>
+  <mat-select [formControl]="categoryControl" required>
+    <mat-option *ngFor="let category of categories" [value]="category">
+      {{ category }}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="categoryControl.hasError('required')"
+    >Please choose a category</mat-error
+  >
+</mat-form-field>
+
+<div class="button" style="padding-top: 10px; text-align: center">
+  <button mat-raised-button color="white" (click)="addCategory()">
+    <mat-icon>add</mat-icon>
+    Create One
+  </button>
+</div>
+
+<mat-selection-list #items>
+  <mat-list-option
+    *ngFor="let item of data['itemList']"
+    [value]="item.itemName"
+  >
+    {{ item.itemName }}
+  </mat-list-option>
+</mat-selection-list>
+
+<mat-dialog-actions>
+  <button
+    mat-button
+    [disabled]="!categoryControl.value"
+    (click)="
+      assignCategory(items.selectedOptions.selected, categoryControl.value)
+    "
+  >
+    Assign
+  </button>
+  <button mat-button (click)="dialogClose()">Close</button>
+</mat-dialog-actions>

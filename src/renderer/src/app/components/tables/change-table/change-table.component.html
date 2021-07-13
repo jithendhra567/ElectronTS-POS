@@ -1,0 +1,25 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Number</mat-label>
+    <input type="number"
+           placeholder="Pick one"
+           aria-label="Number"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-dialog-actions>
+    <button mat-raised-button color='primary' [disabled]="myControl">
+      <mat-icon>swap_horiz</mat-icon>
+      Swap
+    </button>
+    <button mat-raised-button color="primary">
+      Close
+    </button>
+  </mat-dialog-actions>
+</form>

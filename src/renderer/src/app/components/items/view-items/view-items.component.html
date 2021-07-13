@@ -1,36 +1,96 @@
-<div class="categories">
-  <button
-    *ngFor="let category of cats"
-    class="category"
-    (click)="displayItems(category)"
-  >
-    {{ category }}
-  </button>
-</div>
+<div class="section">
+  <div class="expansion-panel-container">
+    <mat-accordion>
+      <mat-expansion-panel class="expansion-panel" expanded hideToggle>
+        <mat-panel-description>Select a category</mat-panel-description>
+        <div class="categories" *ngFor="let category of cats">
+          <button mat-button class="category" (click)="displayItems(category)">
+            {{ category }}
+          </button>
+        </div>
+        <button mat-button class="no-category" (click)="displayNoCategory()">
+          No Category
+        </button>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 
-<div *ngIf="canDisplay" class="items">
-  <mat-grid-list class="item-header" cols="5" rowHeight="100px">
-    <mat-grid-tile colspan="1"> Item ID </mat-grid-tile>
-    <mat-grid-tile colspan="2"> Item Name </mat-grid-tile>
-    <mat-grid-tile colspan="1"> Rate </mat-grid-tile>
-  </mat-grid-list>
-  <mat-grid-list *ngFor="let item of items" cols="5" rowHeight="100px" class="item">
-    <mat-grid-tile colspan="1">
-      {{ item.itemId }}
-    </mat-grid-tile>
-    <mat-grid-tile colspan="2">
-      {{ item.itemName }}
-    </mat-grid-tile>
-    <mat-grid-tile colspan="1">
-      {{ item.rate }}
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <button mat-icon-button (click)="onEditItem(item.itemId)">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-icon-button>
-        <mat-icon>delete</mat-icon>
-      </button>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div class="item-table" *ngIf="canDisplay">
+    <div class="table-align">
+      <div class="button-container">
+        <button
+          *ngIf="prev_cat == 'no cat' && noCategoryItems.length > 0"
+          mat-raised-button
+          class="add-item-button"
+          style="margin-right: 10px"
+          (click) = "assignCategory()"
+        >
+          Assign a Category
+        </button>
+        <button mat-raised-button class="add-item-button" (click)="addItem()">
+          Add Item
+        </button>
+      </div>
+
+      <table multiTemplateDataRows mat-table matSort [dataSource]="dataSource">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+          <td mat-cell *matCellDef="let row">{{ row.itemId }}</td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Item Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.itemName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="rate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Rate</th>
+          <td mat-cell *matCellDef="let row">{{ row.rate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td
+            mat-cell
+            *matCellDef="let row"
+            [attr.colspan]="displayedColumns.length"
+          >
+            <div
+              class="item-detail"
+              [@detailExpand]="
+                row == expandedElement ? 'expanded' : 'collapsed'
+              "
+            >
+              <div class="item-element">
+                <button mat-raised-button (click)="editItem(row.itemId)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-raised-button (click)="deleteItem(row.itemId)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          class="item-row"
+          [class.item-expanded-row]="expandedElement === row"
+          (click)="expandedElement = expandedElement === row ? null : row"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: ['expandedDetail']"
+          class="item-detail-row"
+        ></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter</td>
+        </tr>
+      </table>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 25]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </div>
 </div>

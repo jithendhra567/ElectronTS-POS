@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 import { Item } from "./item.model";
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class ItemService {
+export class ItemService implements OnInit {
 
-  public categories: string[] = ['Tiffins', 'Veg Meals', 'Non-Veg Meals']
+  public categories: string[] = ['Tiffins', 'Veg Meals', 'Non-Veg Meals'];
 
   private _items: Item[] = [
     new Item(1, 'Idly', 'Tiffins', 30),
@@ -23,6 +23,10 @@ export class ItemService {
 
   constructor() {}
 
+  ngOnInit() {
+
+  }
+
   get items() {
     return this._items
   }
@@ -33,6 +37,22 @@ export class ItemService {
 
   addCategory(name: string) {
     this.categories.push(name);
+  }
+
+  assignCategory(items, category) {
+    for(var i of items) {
+      this.items.forEach((el, id) => {
+        if(el.itemName == i) el.categoryName = category
+      })
+    }
+  }
+
+  deleteCategories(cats: string[]) {
+    for(var i of cats) {
+      this.categories.forEach((el, id) => {
+        if(el == i) this.categories.splice(id, 1);
+      })
+    }
   }
 
   addItem(name: string, cat: string, rate: number) {
@@ -47,4 +67,13 @@ export class ItemService {
     this._items[getIndex] = new Item(id, name, cat, rate);
   }
 
+  deleteItem(id: number) {
+    let getIndex = 0;
+    for(var i in this._items) {
+      if(this._items[+i].itemId === id) getIndex = +i;
+    }
+    delete this._items[getIndex];
+    this._items.splice(getIndex, 1);
+    console.log(this._items);
+  }
 }

@@ -1,26 +1,30 @@
-<div>
-  <button (click)="onCreateCategory()">Create a Category</button>
-  <button (click)="onCreateItem()">Create an Item</button>
-</div>
-<div>
-  <div>
-    <form #f1="ngForm" (ngSubmit)="onAddCategory()">
-      <label>Enter the name of the category : </label>
-      <input type="text" ngModel name="cat"/>
-      <button type="submit">Add</button>
-    </form>
-  </div>
-  <div>
-    <form #f2="ngForm" (ngSubmit)="onAddItem()">
-      <label>Enter the name of the item : </label>
-      <input type="text" ngModel name="item" />
-      <label>Select the category of the item</label>
-      <select ngModel name="category">
-        <option *ngFor='let cat of categories'>{{ cat }}</option>
-      </select>
-      <label>Enter the rate of the item :</label>
-      <input type="number" ngModel name="rate" />
-      <button type="submit">Add</button>
-    </form>
-  </div>
+<mat-form-field appearance="standard">
+  <mat-label>Enter the name of the item</mat-label>
+  <input type="text" placeholder="" matInput [(ngModel)]="newItem['name']" />
+</mat-form-field>
+
+<mat-form-field appearance="fill">
+  <mat-label>Select a category</mat-label>
+  <mat-select [(ngModel)]="newItem['category']" required>
+    <mat-option *ngFor="let category of categories" [value]="category">{{
+      category
+    }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<button mat-raised-button (click)="addCategory()">
+  <mat-icon>add</mat-icon>
+  Add Category
+</button>
+
+<mat-form-field appearance="standard">
+  <mat-label>Enter the rate of the item</mat-label>
+  <input type="number" placeholder="0" matInput [(ngModel)]="newItem['rate']" />
+</mat-form-field>
+
+<div mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="newItem" [disabled]="!(newItem['name'] && newItem['category'] && newItem['rate'])">
+    Add
+  </button>
+  <button mat-raised-button (click)="closeDialog()">Close</button>
 </div>

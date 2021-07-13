@@ -1,15 +1,32 @@
-<form #f="ngForm" (ngSubmit)="onEditTable()">
-  <mat-form-field appearance="outline">
+<div>
+  <mat-form-field appearance="standard">
     <mat-label>Enter the capacity of table</mat-label>
-    <input matInput type="number" [(ngModel)]="table_data[0].capacity" name="cap">
+    <input matInput type="number" [(ngModel)]="data['table'].capacity">
   </mat-form-field>
+</div>
 
-  <button mat-raised-button color="primary" type="submit">
-    <mat-icon>edit</mat-icon>
-    Edit
-  </button>
+<div>
+  <label class="reservation">Change the reservation status</label>
+  <mat-radio-group class="radio-buttons" [(ngModel)]="data['table'].reserved_status">
+    <mat-radio-button class="radio-button"[value]="true">Reserved</mat-radio-button>
+    <mat-radio-button class="radio-button" [value]="false">Not Reserved</mat-radio-button>
+  </mat-radio-group>
+</div>
 
-  <button mat-fab color="primary" mat-button (click)="openAlert()">
-    <mat-icon>delete</mat-icon>
-  </button>
-</form>
+<div>
+  <mat-form-field *ngIf="data['table'].reserved_status" appearance="standard" floatLabel="always">
+    <mat-label>Enter no.of people for reservation</mat-label>
+    <input matInput type="number" [(ngModel)]="data['table'].reserved_people">
+  </mat-form-field>
+</div>
+
+<div>
+  <mat-dialog-actions>
+    <button mat-raised-button color="primary" [mat-dialog-close]="data['table']">
+      Edit
+    </button>
+    <button mat-raised-button color="primary" (click)="closeDialog()">
+      Close
+    </button>
+  </mat-dialog-actions>
+</div>

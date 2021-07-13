@@ -1,21 +1,24 @@
-import { Component, ViewChild } from "@angular/core";
-import { NgForm } from "@angular/forms";
-import { TableService } from "../table.service";
+import { Component, Inject } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+
+export interface DialogData {
+  number: number;
+  cap: number;
+}
 
 @Component({
-  selector: 'app-add-table',
-  templateUrl: './add-table.component.html',
-  styleUrls: ['./add-table.component.css']
+  selector: "app-add-table",
+  templateUrl: "./add-table.component.html",
+  styleUrls: ["./add-table.component.css"],
 })
-
 export class AddTableComponent {
 
-  @ViewChild('f', { static: true }) form: NgForm;
+  constructor(
+    public dialogRef: MatDialogRef<AddTableComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
 
-  constructor(private ts: TableService) {}
-
-  onAddTable() {
-    this.ts.addTable(this.form.value['tNum'], this.form.value['cap'], false);
-    console.log(this.ts.tables);
+  closeDialog() {
+    this.dialogRef.close();
   }
 }

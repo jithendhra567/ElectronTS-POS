@@ -1,4 +1,4 @@
-.container {
+/* .container {
   display: flex;
   margin-left: 2%;
   height: 100%;
@@ -30,4 +30,29 @@
   border: 1px solid black;
   overflow-x: hidden;
   overflow-y: auto;
+} */
+
+.table-container {
+  margin-top: 3%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 5%;
+}
+
+.grid-button-1 {
+  width: 100%;
+  padding: 6% 0;
+}
+
+.grid-button-2 {
+  width: 100%;
+}
+
+.table-header {
+  text-align: center;
 }
