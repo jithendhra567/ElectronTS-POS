@@ -1,0 +1,25 @@
+<div class="table-container">
+  <div class="buttons">
+    <button mat-raised-button color="accent" (click)='openModal()'>
+      <mat-icon>add</mat-icon>
+      Add Table
+    </button>
+  </div>
+  <h3 class="table-header">Empty Tables</h3>
+  <mat-grid-list class='table-grid-list' cols="6" rowHeight="100px">
+    <mat-grid-tile class="table-grid-item" *ngFor="let table of emptyTableList" colspan="1" rowHeight="2:1">
+      <button mat-raised-button class="grid-button-1" [style.background-color]="table.reserved_status ? '#ff7f7f': 'lightgreen'" (click)="openBottomSheet(table.tableNumber)">
+        <div>Table-{{table.tableNumber}}</div>
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <h3 class="table-header">Reserved Tables</h3>
+  <mat-grid-list class='table-grid-list' cols="6" rowHeight="100px">
+    <mat-grid-tile class="table-grid-item" *ngFor="let table of reservedTableList" colspan="1" rowHeight="2:1">
+      <button mat-raised-button class="grid-button-2" [style.background-color]="table.reserved_status ? '#ff7f7f': 'lightgreen'" (click)="openBottomSheet(table.tableNumber)">
+        <div>Table-{{table.tableNumber}}</div>
+        <div *ngIf="table.reserved_status">{{ table.capacity - table.reserved_people }}</div>
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

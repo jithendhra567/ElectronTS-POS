@@ -1,0 +1,14 @@
+.radio-buttons {
+  display: flex;
+  flex-direction: column;
+  font-size: small;
+  padding: 4%;
+}
+
+.radio-button {
+  padding: 2% 0;
+}
+
+.reservation {
+  font-size: small;
+}

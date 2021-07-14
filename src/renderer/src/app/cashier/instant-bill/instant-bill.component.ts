@@ -13,6 +13,13 @@ export interface UserData {
   isAdded: boolean;
 }
 
+export interface selectedItem {
+  id: string;
+  name: string;
+  progress: string;
+  fruit: string;
+}
+
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -50,19 +57,20 @@ const NAMES: string[] = [
 export class InstantBillComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'progress', 'fruit', 'action'];
   dataSource: MatTableDataSource<UserData>;
-  displayedColumns2: string[] = ['position', 'name', 'weight', 'symbol'];
-  selectedItems:MatTableDataSource<PeriodicElement>;
+  selectedItems:MatTableDataSource<selectedItem>;
 
+  users:UserData[] = [];
+  selectedUsers: selectedItem[] = [];
   @ViewChild("paginator1") paginator: MatPaginator;
   @ViewChild("paginator2") paginator2: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor() {
     // Create 100 users
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
+    this.users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
     // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
-    this.selectedItems = new MatTableDataSource(ELEMENT_DATA);
+    this.dataSource = new MatTableDataSource(this.users);
+    this.selectedItems = new MatTableDataSource(this.selectedUsers);
   }
 
   ngOnInit(): void {
@@ -80,6 +88,16 @@ export class InstantBillComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  addToCart(row:UserData){
+    this.users[+row.id-1].isAdded=true;
+    this.dataSource = new MatTableDataSource(this.users);
+    this.dataSource.paginator = this.paginator;
+    const temp: selectedItem = this.users[+row.id-1];
+    this.selectedUsers.push(temp);
+    this.selectedItems = new MatTableDataSource(this.selectedUsers);
+    this.selectedItems.paginator = this.paginator2;
   }
 }
 

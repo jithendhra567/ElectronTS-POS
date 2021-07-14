@@ -1,0 +1,15 @@
+.home-container {
+  height: 100%;
+}
+
+.contents {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.tabs {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

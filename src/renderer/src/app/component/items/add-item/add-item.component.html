@@ -1,0 +1,30 @@
+<mat-form-field appearance="standard">
+  <mat-label>Enter the name of the item</mat-label>
+  <input type="text" placeholder="" matInput [(ngModel)]="newItem['name']" />
+</mat-form-field>
+
+<mat-form-field appearance="fill">
+  <mat-label>Select a category</mat-label>
+  <mat-select [(ngModel)]="newItem['category']" required>
+    <mat-option *ngFor="let category of categories" [value]="category">{{
+      category
+    }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<button mat-raised-button (click)="addCategory()">
+  <mat-icon>add</mat-icon>
+  Add Category
+</button>
+
+<mat-form-field appearance="standard">
+  <mat-label>Enter the rate of the item</mat-label>
+  <input type="number" placeholder="0" matInput [(ngModel)]="newItem['rate']" />
+</mat-form-field>
+
+<div mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="newItem" [disabled]="!(newItem['name'] && newItem['category'] && newItem['rate'])">
+    Add
+  </button>
+  <button mat-raised-button (click)="closeDialog()">Close</button>
+</div>

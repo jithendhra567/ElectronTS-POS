@@ -1,0 +1,13 @@
+<mat-form-field appearance="standard">
+  <mat-label>Enter the name of category</mat-label>
+  <input type="text" placeholder="Name" matInput [(ngModel)]='data'>
+</mat-form-field>
+
+<div mat-dialog-actions>
+  <button mat-raised-button type="submit" [mat-dialog-close]="data" cdkFocusInitial>
+    Add
+  </button>
+  <button mat-raised-button (click)="closeDialog()">
+    Close
+  </button>
+</div>

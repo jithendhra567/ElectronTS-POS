@@ -1,0 +1,24 @@
+<div *ngIf="!categories || categories.length == 0">
+  There are no categories at the time.
+  <div class="button" style="padding-top: 10px; text-align: center;">
+    <button mat-raised-button color="white" (click)="addCategory()">
+      <mat-icon>add</mat-icon>
+      Create One
+    </button>
+  </div>
+</div>
+
+<mat-selection-list #cats>
+  <mat-list-option *ngFor="let category of categories" [value]="category">
+    {{ category }}
+  </mat-list-option>
+</mat-selection-list>
+
+<mat-dialog-actions>
+  <button mat-button (click)="deleteCategories(cats.selectedOptions.selected)" [disabled]="!cats.selectedOptions.selected.length">
+    Delete
+  </button>
+  <button mat-button (click)="dialogClose()">
+    Close
+  </button>
+</mat-dialog-actions>
