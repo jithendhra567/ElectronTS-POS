@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenavContainer } from '@angular/material/sidenav';
 import { IpcService } from '../ipc.service';
-
 @Component({
   selector: 'app-cashier',
   templateUrl: './cashier.component.html',

@@ -10,6 +10,7 @@ import { RegularBillComponent } from './regular-bill/regular-bill.component';
 import { TableComponent } from './table/table.component';
 import { ChairComponent } from './chair/chair.component';
 import { TableDetailsComponent } from './table-details/table-details.component';
+import { AddItemComponent } from './add-item/add-item.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { TableDetailsComponent } from './table-details/table-details.component';
     RegularBillComponent,
     TableComponent,
     ChairComponent,
-    TableDetailsComponent
+    TableDetailsComponent,
+    AddItemComponent,
   ],
   imports: [
     CommonModule,

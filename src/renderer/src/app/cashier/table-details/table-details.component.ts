@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { AddItemComponent } from '../add-item/add-item.component';
 
 
 export interface PeriodicElement {
@@ -36,7 +38,7 @@ export class TableDetailsComponent implements OnInit {
 
   @ViewChild("paginator2") paginator2: MatPaginator;
 
-  constructor() { 
+  constructor(public dialog: MatDialog) { 
     this.selectedItems = new MatTableDataSource(ELEMENT_DATA);
   }
 
@@ -46,6 +48,15 @@ export class TableDetailsComponent implements OnInit {
 
   ngAfterViewInit(){
     this.selectedItems.paginator = this.paginator2;
+  }
+
+  open(){
+    const dialogRef = this.dialog.open(AddItemComponent);
+    dialogRef.afterClosed().subscribe((result:string[]) => {
+      result.forEach(item=>{
+        //ids will be here 
+      })
+    });
   }
 
 }
