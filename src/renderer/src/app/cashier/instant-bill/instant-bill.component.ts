@@ -7,28 +7,30 @@ import {MatTableDataSource} from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { AddItemComponent } from '../add-item/add-item.component';
 
-export interface selectedItem {
+export interface ItemData {
   id: string;
   name: string;
-  progress: string;
-  fruit: string;
-  quantity: number
+  category: string,
+  rate: number,
+  quantity: number,
+  isAdded: boolean
 }
+
 @Component({
   selector: 'app-instant-bill',
   templateUrl: './instant-bill.component.html',
   styleUrls: ['./instant-bill.component.scss']
 })
 export class InstantBillComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit','quantity', 'action'];
-  selectedItems:MatTableDataSource<selectedItem>;
+  displayedColumns: string[] = ['id', 'name', 'category', 'rate', 'quantity', 'action'];
+  selectedItems:MatTableDataSource<ItemData>;
 
-  selectedUsers: selectedItem[] = [];
+  items: ItemData[] = [];
   @ViewChild("paginator") paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public dialog: MatDialog) {
-    this.selectedItems = new MatTableDataSource(this.selectedUsers);
+    this.selectedItems = new MatTableDataSource(this.items);
   }
 
   ngOnInit(): void {
@@ -48,10 +50,12 @@ export class InstantBillComponent implements OnInit {
   }
   open(){
     const dialogRef = this.dialog.open(AddItemComponent);
-    dialogRef.afterClosed().subscribe((result:string[]) => {
-      result.forEach(item=>{
-        //ids will be here 
-      })
+    dialogRef.afterClosed().subscribe((result) => {
+      this.selectedItems = result
     });
+  }
+
+  submitBill() {
+
   }
 }

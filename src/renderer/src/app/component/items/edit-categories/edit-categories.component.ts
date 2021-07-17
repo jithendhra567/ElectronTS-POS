@@ -15,7 +15,9 @@ export class EditCategoriesComponent implements OnInit {
   constructor(private dialog: MatDialog, private is: ItemService, private dialogRef: MatDialogRef<EditCategoriesComponent>) {}
 
   ngOnInit() {
-    this.categories = this.is.categories
+    this.is.categories.subscribe(categories => {
+      this.categories = categories
+    })
   }
 
   addCategory() {
@@ -23,7 +25,7 @@ export class EditCategoriesComponent implements OnInit {
       width: '300px'
     })
     dialogRef.afterClosed().subscribe(data => {
-      if(data)  this.is.addCategory(data);
+      if(data)  this.is.addCategory(data).subscribe();
     })
   }
 
@@ -32,7 +34,7 @@ export class EditCategoriesComponent implements OnInit {
     for(var i of options) {
       arr.push(i.value)
     }
-    this.is.deleteCategories(arr);
+    this.is.deleteCategories(arr).subscribe();
   }
 
   dialogClose() {

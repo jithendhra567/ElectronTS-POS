@@ -9,7 +9,7 @@ import { ViewTableComponent } from "./view-table/view-table.component";
 @Component({
   selector: "app-table",
   templateUrl: "./table.component.html",
-  styleUrls: ["./table.component.css"],
+  styleUrls: ["./table.component.scss"],
 })
 export class TableComponent implements OnInit {
   tableList: Table[] = [];
@@ -24,13 +24,9 @@ export class TableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.tableList = this.ts.tables;
-    this.emptyTableList = this.tableList.filter(
-      (table) => table.reserved_status === false
-    );
-    this.reservedTableList = this.tableList.filter(
-      (table) => table.reserved_status === true
-    );
+    this.ts.tables.subscribe(tables => {
+      this.tableList = tables
+    })
   }
 
   openModal() {
@@ -41,7 +37,7 @@ export class TableComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.ts.addTable(result);
+        this.ts.addTable().subscribe();
       }
     });
   }

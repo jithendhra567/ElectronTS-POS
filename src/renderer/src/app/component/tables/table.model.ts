@@ -2,7 +2,7 @@ export class Table {
   constructor(
     public tableNumber: number,
     public capacity: number,
-    public reserved_status: boolean,
+    public status: 0 | 1 | 2,
     public reserved_people: number
   ) {}
 }

@@ -1,4 +1,4 @@
-<div class="table-container">
+<!-- <div class="table-container">
   <div class="buttons">
     <button mat-raised-button color="accent" (click)='openModal()'>
       <mat-icon>add</mat-icon>
@@ -22,4 +22,39 @@
       </button>
     </mat-grid-tile>
   </mat-grid-list>
+</div> -->
+
+<div class="table-container">
+  <div class="buttons">
+    <button mat-raised-button color="accent" (click)="openModal()">
+      <mat-icon>add</mat-icon>
+      Add Table
+    </button>
+  </div>
+  <div class="main">
+    <h2>TABLES</h2>
+    <div class="tables">
+      <div class="table" *ngFor="let table of tableList">
+        <div class="chairs">
+          <app-chair [rotation]="0"></app-chair>
+          <app-chair [rotation]="0"></app-chair>
+          <app-chair [rotation]="0"></app-chair>
+        </div>
+        <div class="flex">
+          <app-chair [rotation]="270"></app-chair>
+          <div class="card">
+            <button (click)="openBottomSheet(table.tableNumber)" style="border: none; background-color: white;">
+              <h1>TABLE- {{ table.tableNumber }}</h1>
+            </button>
+          </div>
+          <app-chair [rotation]="90"></app-chair>
+        </div>
+        <div class="chairs">
+          <app-chair [rotation]="180"></app-chair>
+          <app-chair [rotation]="180"></app-chair>
+          <app-chair [rotation]="180"></app-chair>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

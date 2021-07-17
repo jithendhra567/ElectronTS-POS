@@ -1,11 +1,23 @@
 <div class="home-container">
   <mat-toolbar clas="home-toolbar" color="primary">
-    <div class="heading">
-      <h1>Welcome to Point of Sale</h1>
+    <div class="home-toolbar">
+      <div class="heading">
+        <h1>Welcome to Point of Sale</h1>
+      </div>
+      <div class="log-out">
+        <mat-icon style="size: 10px"> logout</mat-icon>
+        <span style="position: relative; top: -4px">
+          <a
+            routerLink="/login"
+            style="font-size: larger; text-decoration: underline; color: white"
+            >Log Out</a
+          >
+        </span>
+      </div>
     </div>
   </mat-toolbar>
   <div class="contents">
-    <mat-tab-group mat-stretch-tabs selectedIndex="1" class="tabs">
+    <mat-tab-group mat-stretch-tabs class="tabs">
       <mat-tab label="Tables">
         <ng-template matTabContent>
           <app-table></app-table>

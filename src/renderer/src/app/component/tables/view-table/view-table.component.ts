@@ -26,7 +26,9 @@ export class ViewTableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.table = this.ts.tables.filter(table => table.tableNumber === this.data.id);
+    this.ts.tables.subscribe(tables => {
+      this.table = tables.filter(table => table.tableNumber === this.data.id);
+    })
   }
 
   openModal() {
@@ -35,7 +37,7 @@ export class ViewTableComponent implements OnInit {
       data: { table: this.table[0] }
     })
     dialogRef.afterClosed().subscribe(res => {
-      this.ts.editTable(res.tableNumber, res.capacity, res.reserved_status, res.reserved_people);
+      this.ts.editTable(res.tableNumber, res.status, res.reserved_people).subscribe();
     });
   }
 
@@ -44,7 +46,7 @@ export class ViewTableComponent implements OnInit {
       width: '300px'
     })
     deleteRef.afterClosed().subscribe((val) => {
-      if(val === true)  this.ts.deleteTable(this.table[0].tableNumber);
+      if(val === true)  this.ts.deleteTable(this.table[0].tableNumber).subscribe();
     });
   }
 

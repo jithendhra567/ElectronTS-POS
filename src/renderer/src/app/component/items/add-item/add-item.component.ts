@@ -25,7 +25,9 @@ export class AddItemComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.categories = this.is.categories;
+    this.is.categories.subscribe(categories => {
+      this.categories = categories
+    });
   }
 
   closeDialog() {
@@ -37,7 +39,7 @@ export class AddItemComponent implements OnInit {
       width: '300px'
     })
     dialogRef.afterClosed().subscribe(data => {
-      this.is.addCategory(data);
+      this.is.addCategory(data).subscribe();
     })
   }
 }

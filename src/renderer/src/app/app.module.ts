@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AdminPanelModule } from "./admin-panel/admin-panel.module";
+import { CommonModule } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -14,12 +14,12 @@ import { AdminPanelModule } from "./admin-panel/admin-panel.module";
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule,
-    AdminPanelModule
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
