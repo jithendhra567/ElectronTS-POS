@@ -11,6 +11,8 @@ import { AddItemComponent } from "./add-item/add-item.component";
 import { EditItemComponent } from "./edit-item/edit-item.component";
 import { DeleteItemComponent } from "./delete-item/delete-item.component";
 import { AssignCategoryComponent } from "./assign-category/assign-category.component";
+import { DataService } from "src/app/ipc.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-item",
@@ -31,7 +33,8 @@ export class ItemComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dialog: MatDialog, private is: ItemService) {}
+  constructor(private dialog: MatDialog, private is: ItemService
+    ,private _snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.is.categories.subscribe((categories) => {
@@ -162,5 +165,15 @@ export class ItemComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(() => {
       this.displayNoCategory()
     });
+  }
+
+  save(){
+    DataService.save('items',this.items);
+    DataService.save('categories',this.categories);
+    this.openSnackBar('saved', 'close')
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }

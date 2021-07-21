@@ -6,6 +6,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { AddItemComponent } from '../add-item/add-item.component';
+import { PosPrinter } from 'electron-pos-printer';
 
 export interface ItemData {
   id: string;
@@ -26,6 +27,7 @@ export class InstantBillComponent implements OnInit {
   selectedItems:MatTableDataSource<ItemData>;
 
   items: ItemData[] = [];
+  total: number = 0;
   @ViewChild("paginator") paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -41,21 +43,35 @@ export class InstantBillComponent implements OnInit {
     this.selectedItems.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.selectedItems.filter = filterValue.trim().toLowerCase();
-    if (this.selectedItems.paginator) {
-      this.selectedItems.paginator.firstPage();
+  updateQty(row:ItemData, _qty: any) {
+    const qty = +_qty.value;
+    if(qty>0){
+      this.items.forEach(item=>{
+        if(item.id===row.id) item.quantity=qty;
+      })
     }
+    this.total=0;
+    this.items.forEach(item=>this.total+=(item.quantity*item.rate));
   }
+
   open(){
     const dialogRef = this.dialog.open(AddItemComponent);
     dialogRef.afterClosed().subscribe((result) => {
       this.selectedItems = result
+      this.items = result;
+      this.total=0;
+      this.items.forEach(item=>this.total+=(item.quantity*item.rate));
     });
   }
 
-  submitBill() {
+  remove(row: ItemData){
+    this.items = this.items.filter(item=>item.id!==row.id);
+    this.selectedItems = new MatTableDataSource(this.items);
+    this.total=0;
+    this.items.forEach(item=>this.total+=(item.quantity*item.rate));
+  }
 
+  printBill() {
+    window.api.electronIpcSend('print',this.items);
   }
 }

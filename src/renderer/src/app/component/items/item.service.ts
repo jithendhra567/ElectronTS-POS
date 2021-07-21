@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { map, take, tap } from "rxjs/operators";
+import { DataService } from "src/app/ipc.service";
 import { Item } from "./item.model";
 
 @Injectable({
@@ -17,9 +18,9 @@ import { Item } from "./item.model";
 // new Item(8, 'Veg Biryani', 'Veg Meals', 80),
 // new Item(9, 'Chicken Curry', 'Non-Veg Meals', 75)
 export class ItemService implements OnInit {
-  public _categories = new BehaviorSubject<string[]>([]);
+  public _categories = new BehaviorSubject<string[]>(DataService.categories);
 
-  private _items = new BehaviorSubject<Item[]>([]);
+  private _items = new BehaviorSubject<Item[]>(DataService.items);
 
   itemLength: number = 0
 

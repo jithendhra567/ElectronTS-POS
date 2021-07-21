@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, of } from "rxjs";
 import { map, switchMap, take, tap } from "rxjs/operators";
+import { DataService } from "src/app/ipc.service";
 import { Table } from "./table.model";
 
     // new Table(1, 5, false, 0),
@@ -24,7 +25,7 @@ import { Table } from "./table.model";
 
 export class TableService {
 
-  private _tables = new BehaviorSubject<Table[]>([]);
+  private _tables = new BehaviorSubject<Table[]>(DataService.tables);
   tableLength: number = 0
 
   constructor() {}

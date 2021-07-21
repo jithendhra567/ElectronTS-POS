@@ -20,7 +20,7 @@
         />
       </svg>
     </div>
-    <form #f="ngForm" (ngSubmit)="onLogin(f)" class="log-in" autocomplete="off">
+    <form class="log-in" autocomplete="off">
       <h4>We are <span>POS</span></h4>
       <p>Welcome back! Log in to your account</p>
       <div class="floating-label">
@@ -33,7 +33,7 @@
           autocomplete="off"
           required
           email
-          #emailCtrl="ngModel"
+          #emailCtrl
         />
         <label for="email">Email:</label>
         <div class="icon">
@@ -68,7 +68,7 @@
           id="password"
           required
           minlength="6"
-          #pwdctrl="ngModel"
+          #pwdctrl
           autocomplete="off"
         />
         <label for="password">Password:</label>
@@ -102,7 +102,7 @@
           </svg>
         </div>
       </div>
-      <button type="submit" [disabled]="!f.valid">Log in</button>
+      <button (click)="onLogin(emailCtrl.value, pwdctrl.value)">Log in</button>
     </form>
   </div>
 </body>
