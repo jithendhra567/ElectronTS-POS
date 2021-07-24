@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, Menu } from 'electron';
+import { app, BrowserWindow, ipcMain, Menu, remote } from 'electron';
 import * as path from 'path';
 import { DtoSystemInfo } from '../ipc-dtos/dtosysteminfo';
 import * as os from 'os';
@@ -35,7 +35,6 @@ function createWindow() {
   Menu.setApplicationMenu(null);
 
   win.loadFile(path.join(app.getAppPath(), 'dist/renderer', 'index.html'));
-
   win.on('closed', () => {
     win = null;
   });
@@ -95,5 +94,12 @@ ipcMain.on('categories', (event, data)=>{
 });
 
 ipcMain.on('print', (event, data:any)=>{
-  
+  const win2 = new BrowserWindow({
+    height: 600,
+    width: 300
+  });
+  win2.loadFile(path.join(app.getAppPath(), 'print.html'));
+  win2.once('ready-to-show', () => {
+    win2.webContents.print();
+  })
 })

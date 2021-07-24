@@ -73,5 +73,23 @@ export class InstantBillComponent implements OnInit {
 
   printBill() {
     window.api.electronIpcSend('print',this.items);
+    //this.PrintElem();
+  }
+  PrintElem()
+  {
+    var mywindow = window.open('', 'PRINT', 'height=600,width=400');
+    const ele = document.getElementById('billcontent')
+    console.log(mywindow,ele)
+    mywindow?.document.write('<html><head>');
+    mywindow?.document.write('</head><body >');
+    if(ele) mywindow?.document.write(ele.innerHTML);
+    mywindow?.document.write('</body></html>');
+    mywindow?.document.close(); // necessary for IE >= 10
+    mywindow?.focus(); // necessary for IE >= 10*/
+    setTimeout(function () {
+    mywindow?.print();
+    mywindow?.close();
+    }, 1000)
+    return true;
   }
 }

@@ -9,7 +9,7 @@ import { DataService, IpcService } from './ipc.service';
 export class AppComponent {
 
   constructor(private ipcService: IpcService) {
-    this.ipcService.getData();
+    //this.ipcService.getData();
   }
 
   clickDevTools() {
