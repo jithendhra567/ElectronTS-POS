@@ -1,0 +1,19 @@
+.bottom-sheet {
+  padding: 50px;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+p {
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+}

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IpcService } from './ipc.service';
+import { DataService, IpcService } from './ipc.service';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +7,9 @@ import { IpcService } from './ipc.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'POS';
 
   constructor(private ipcService: IpcService) {
+    //this.ipcService.getData();
   }
 
   clickDevTools() {

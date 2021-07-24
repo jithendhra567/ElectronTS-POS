@@ -1,0 +1,17 @@
+<div>
+  <mat-form-field appearance="standard">
+    <mat-label>Enter the capacity of table</mat-label>
+    <input matInput type="number" [(ngModel)]="data['table'].capacity">
+  </mat-form-field>
+</div>
+
+<div>
+  <mat-dialog-actions>
+    <button mat-raised-button color="primary" [mat-dialog-close]="data['table']">
+      Edit
+    </button>
+    <button mat-raised-button color="primary" (click)="closeDialog()">
+      Close
+    </button>
+  </mat-dialog-actions>
+</div>

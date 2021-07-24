@@ -1,0 +1,50 @@
+.item-container {
+  margin-top: 3%;
+}
+
+.nav-bar {
+  display: flex;
+}
+
+.expansion-panel {
+  height: 100vh;
+}
+
+.expansion-panel-container {
+  width: 25%;
+}
+
+.container {
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 5%;
+}
+
+.category {
+  margin: 5px 0;
+}
+
+.item-table {
+  width: 100%;
+}
+
+.table-align {
+  width: 75%;
+  margin: auto;
+}
+
+.button-container {
+  float: right;
+}
+
+table {
+  width: 100%;
+}
+
+.button {
+  margin-left: -13px;
+}

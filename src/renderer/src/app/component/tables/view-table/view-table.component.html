@@ -1,0 +1,19 @@
+<div class="bottom-sheet">
+  <div class='header'>
+    <mat-card-title class="title">Table - {{ table[0].tableNumber }}</mat-card-title>
+  </div>
+  <div class="content">
+    <p>
+      The capacity of this table is {{ table[0].capacity }}
+    </p>
+    <div *ngIf="table[0].status">
+      <p>This table is reserved for {{ table[0].reserved_people }} people.</p>
+    </div>
+  </div>
+  <div class='actions'>
+    <button mat-button (click)="openModal()">Edit Table</button>
+    <button mat-button (click)="openDeleteAlert()">Delete Table</button>
+    <button mat-button (click)="openSwapModal()">Swap Table</button>
+    <button mat-button (click)="closeBottomSheet()">Close</button>
+  </div>
+</div>

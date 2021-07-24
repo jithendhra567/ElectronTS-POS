@@ -4,43 +4,18 @@ import {AfterViewInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { AddItemComponent } from '../add-item/add-item.component';
+import { PosPrinter } from 'electron-pos-printer';
 
-export interface UserData {
+export interface ItemData {
   id: string;
   name: string;
-  progress: string;
-  fruit: string;
-  isAdded: boolean;
+  category: string,
+  rate: number,
+  quantity: number,
+  isAdded: boolean
 }
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
-
-/** Constants used to fill up our data base. */
-const FRUITS: string[] = [
-  'blueberry', 'lychee', 'kiwi', 'mango', 'peach', 'lime', 'pomegranate', 'pineapple'
-];
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
-];
 
 @Component({
   selector: 'app-instant-bill',
@@ -48,50 +23,73 @@ const NAMES: string[] = [
   styleUrls: ['./instant-bill.component.scss']
 })
 export class InstantBillComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit', 'action'];
-  dataSource: MatTableDataSource<UserData>;
-  displayedColumns2: string[] = ['position', 'name', 'weight', 'symbol'];
-  selectedItems:MatTableDataSource<PeriodicElement>;
+  displayedColumns: string[] = ['id', 'name', 'category', 'rate', 'quantity', 'action'];
+  selectedItems:MatTableDataSource<ItemData>;
 
-  @ViewChild("paginator1") paginator: MatPaginator;
-  @ViewChild("paginator2") paginator2: MatPaginator;
+  items: ItemData[] = [];
+  total: number = 0;
+  @ViewChild("paginator") paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
-    // Create 100 users
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
-    this.selectedItems = new MatTableDataSource(ELEMENT_DATA);
+  constructor(public dialog: MatDialog) {
+    this.selectedItems = new MatTableDataSource(this.items);
   }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.selectedItems.paginator = this.paginator2;
-    this.dataSource.sort = this.sort;
+    this.selectedItems.paginator = this.paginator;
+    this.selectedItems.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  updateQty(row:ItemData, _qty: any) {
+    const qty = +_qty.value;
+    if(qty>0){
+      this.items.forEach(item=>{
+        if(item.id===row.id) item.quantity=qty;
+      })
     }
+    this.total=0;
+    this.items.forEach(item=>this.total+=(item.quantity*item.rate));
   }
-}
 
+  open(){
+    const dialogRef = this.dialog.open(AddItemComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      this.selectedItems = result
+      this.items = result;
+      this.total=0;
+      this.items.forEach(item=>this.total+=(item.quantity*item.rate));
+    });
+  }
 
-function createNewUser(id: number): UserData {
-  const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
-    isAdded: false
-  };
+  remove(row: ItemData){
+    this.items = this.items.filter(item=>item.id!==row.id);
+    this.selectedItems = new MatTableDataSource(this.items);
+    this.total=0;
+    this.items.forEach(item=>this.total+=(item.quantity*item.rate));
+  }
+
+  printBill() {
+    window.api.electronIpcSend('print',this.items);
+    //this.PrintElem();
+  }
+  PrintElem()
+  {
+    var mywindow = window.open('', 'PRINT', 'height=600,width=400');
+    const ele = document.getElementById('billcontent')
+    console.log(mywindow,ele)
+    mywindow?.document.write('<html><head>');
+    mywindow?.document.write('</head><body >');
+    if(ele) mywindow?.document.write(ele.innerHTML);
+    mywindow?.document.write('</body></html>');
+    mywindow?.document.close(); // necessary for IE >= 10
+    mywindow?.focus(); // necessary for IE >= 10*/
+    setTimeout(function () {
+    mywindow?.print();
+    mywindow?.close();
+    }, 1000)
+    return true;
+  }
 }

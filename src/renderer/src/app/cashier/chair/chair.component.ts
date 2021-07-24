@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ChairComponent implements OnInit {
 
-  @Input() rotation: string;
+  @Input() rotation: number;
 
   rotationData = "rotate(0deg)"
 

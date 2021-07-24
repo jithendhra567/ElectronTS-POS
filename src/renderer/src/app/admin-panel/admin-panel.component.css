@@ -1,0 +1,22 @@
+.home-container {
+  height: 100%;
+}
+
+.home-toolbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: auto 20px;
+}
+
+.contents {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.tabs {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

@@ -8,8 +8,9 @@ import { MaterialModule } from '../material.module';
 import { InstantBillComponent } from './instant-bill/instant-bill.component';
 import { RegularBillComponent } from './regular-bill/regular-bill.component';
 import { TableComponent } from './table/table.component';
-import { ChairComponent } from './chair/chair.component';
 import { TableDetailsComponent } from './table-details/table-details.component';
+import { AddItemComponent } from './add-item/add-item.component';
+import { ChairComponent } from './chair/chair.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +19,9 @@ import { TableDetailsComponent } from './table-details/table-details.component';
     InstantBillComponent,
     RegularBillComponent,
     TableComponent,
-    ChairComponent,
-    TableDetailsComponent
+    TableDetailsComponent,
+    AddItemComponent,
+    ChairComponent
   ],
   imports: [
     CommonModule,
