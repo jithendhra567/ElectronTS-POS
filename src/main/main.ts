@@ -94,10 +94,12 @@ ipcMain.on('categories', (event, data)=>{
 });
 
 ipcMain.on('print', (event, data:any)=>{
+  console.log(data);
   const win2 = new BrowserWindow({
     height: 600,
-    width: 300
+    width: 400
   });
+  fs.writeFileSync("print.html",data[0])
   win2.loadFile(path.join(app.getAppPath(), 'print.html'));
   win2.once('ready-to-show', () => {
     win2.webContents.print();
