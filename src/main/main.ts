@@ -60,6 +60,7 @@ ipcMain.on('request-systeminfo', () => {
 
 ipcMain.on('get-data', ()=>{
   !fs.existsSync("data") && fs.mkdirSync("data");
+  !fs.existsSync(path.join(app.getPath('documents'), "/bills")) && fs.mkdirSync(path.join(app.getPath('documents'), "/bills"));
   let items =  [];
   let tables = [];
   let categories = [];
@@ -99,8 +100,10 @@ ipcMain.on('print', (event, data:any)=>{
     height: 600,
     width: 400
   });
-  fs.writeFileSync("print.html",data[0])
-  win2.loadFile(path.join(app.getAppPath(), 'print.html'));
+  const fileName = "print"+new Date().getTime()+".html";
+  fs.writeFileSync(path.join(app.getPath('documents'), "/bills/"+fileName),data[0]);
+  win2.title = path.join(app.getPath('documents'), "/bills/"+fileName);
+  win2.loadFile(path.join(app.getPath('documents'), "/bills/"+fileName));
   win2.once('ready-to-show', () => {
     win2.webContents.print();
   })
