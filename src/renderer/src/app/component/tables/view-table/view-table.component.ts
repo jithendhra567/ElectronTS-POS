@@ -37,7 +37,10 @@ export class ViewTableComponent implements OnInit {
       data: { table: this.table[0] }
     })
     dialogRef.afterClosed().subscribe(res => {
-      this.ts.editTable(res.tableNumber, res.status, res.reserved_people).subscribe();
+      if(res) {
+        this.ts.editTable(res.tableNumber, res.capacity, res.status, res.reserved_people);
+        this.bottomSheetRef.dismiss();
+      }
     });
   }
 
@@ -46,7 +49,10 @@ export class ViewTableComponent implements OnInit {
       width: '300px'
     })
     deleteRef.afterClosed().subscribe((val) => {
-      if(val === true)  this.ts.deleteTable(this.table[0].tableNumber).subscribe();
+      if(val === true)  {
+        this.ts.deleteTable(this.table[0].tableNumber);
+        this.bottomSheetRef.dismiss();
+      }
     });
   }
 
@@ -55,7 +61,9 @@ export class ViewTableComponent implements OnInit {
       width: '300px',
       data: {table1: this.table[0]}
     })
-    swapRef.afterClosed().subscribe()
+    swapRef.afterClosed().subscribe(() => {
+      this.bottomSheetRef.dismiss();
+    })
   }
 
   closeBottomSheet() {

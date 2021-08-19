@@ -39,7 +39,7 @@ export class AddItemComponent implements OnInit {
       width: '300px'
     })
     dialogRef.afterClosed().subscribe(data => {
-      this.is.addCategory(data).subscribe();
+      if(data)  this.is.addCategory(data).subscribe();
     })
   }
 }

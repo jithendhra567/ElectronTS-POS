@@ -40,7 +40,7 @@ export class TableComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.ts.addTable().subscribe();
+        this.ts.addTable(result);
       }
     });
   }
