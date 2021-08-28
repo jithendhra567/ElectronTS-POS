@@ -27,7 +27,7 @@ import { ItemService } from 'src/app/component/items/item.service';
 // ];
 
 export interface ItemData {
-  id: number,
+  id: string,
   name: string,
   category: string,
   rate: number,

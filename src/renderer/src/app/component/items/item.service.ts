@@ -19,8 +19,8 @@ export class ItemService implements OnInit {
   itemData: AngularFirestoreCollection;
   categoryData: AngularFirestoreDocument;
   itemLength: number = 0;
-  itemInfo = [];
-  categoryInfo = [];
+  itemInfo: any = [];
+  categoryInfo: any = [];
 
   constructor(private db: AngularFirestore) {
     this.itemData = this.db.collection("POS");
@@ -41,9 +41,12 @@ export class ItemService implements OnInit {
       .get()
       .toPromise()
       .then((data) => {
-        allCategories = data.data()["categories"];
-        this.categoryInfo = allCategories;
-        this._categories.next(allCategories);
+        if (data.data()) {
+          const d: any = data.data();
+          allCategories = d["categories"];
+          this.categoryInfo = allCategories;
+          this._categories.next(allCategories);
+        }
       })
       .catch((err) => console.log(err));
   }
@@ -76,7 +79,7 @@ export class ItemService implements OnInit {
 
   deleteCategories(cats: string[]) {
     for (var i of cats) {
-      this.categoryInfo.forEach((el, id) => {
+      this.categoryInfo.forEach((el: any, id: any) => {
         if (el === i) this.categoryInfo.splice(id, 1);
       });
     }
@@ -154,7 +157,7 @@ export class ItemService implements OnInit {
       tags: [],
       image: "",
     };
-    let ind = this.itemInfo.findIndex((item) => item.itemId === id)
+    let ind = this.itemInfo.findIndex((item: any) => item.itemId === id)
     this.itemInfo[ind] = editedItem
     return this.itemData
       .doc(id)
@@ -164,7 +167,7 @@ export class ItemService implements OnInit {
   }
 
   deleteItem(id: string) {
-    let ind = this.itemInfo.findIndex(item => item.itemId === id);
+    let ind = this.itemInfo.findIndex((item: any) => item.itemId === id);
     this.itemInfo.splice(ind, 1);
     return this.itemData
       .doc()

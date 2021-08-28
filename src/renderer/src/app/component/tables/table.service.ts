@@ -30,7 +30,7 @@ export class TableService {
   private _tables = new BehaviorSubject<Table[]>(DataService.tables);
   tableLength: number = 0;
   tableData: AngularFirestoreDocument;
-  tableInfo = [];
+  tableInfo: any = [];
 
   constructor(private db: AngularFirestore) {
     this.tableData = this.db.collection("hotels").doc("POS");
@@ -47,7 +47,8 @@ export class TableService {
       .get()
       .toPromise()
       .then((data) => {
-        allTables = data.data()["tables"];
+        const d: any = data.data();
+        allTables = d["tables"];
         if (allTables) {
           this._tables.next(allTables);
           this.tableInfo = allTables;
