@@ -6,7 +6,11 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AdminPanelModule } from "./admin-panel/admin-panel.module";
+import { CommonModule } from "@angular/common";
+import  { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import  { AngularFireAuthModule } from '@angular/fire/auth';
+import { environment } from "src/environments/environment";
 
 @NgModule({
   declarations: [
@@ -14,12 +18,16 @@ import { AdminPanelModule } from "./admin-panel/admin-panel.module";
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    AdminPanelModule
+    AngularFireModule,
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,144 +1,22 @@
 <div class="main">
-    <h2>TABLES</h2>
-    <div class="tables">
-        <div class="table" [routerLink]="['/table-details']" >
-            <div class="chairs">    
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-            </div>
-            <div class="flex">
-                <app-chair [rotation]="270"></app-chair>
-                <div class="card" ><h1>EMPTY</h1></div>
-                <app-chair [rotation]="90"></app-chair>
-            </div>
-            <div class="chairs">    
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-            </div>
-        </div>
-        <div class="table">
-            <div class="chairs">    
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-            </div>
-            <div class="flex">
-                <app-chair [rotation]="270"></app-chair>
-                <div class="card" ><h1>EMPTY</h1></div>
-                <app-chair [rotation]="90"></app-chair>
-            </div>
-            <div class="chairs">    
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-            </div>
-        </div>
-        <div class="table">
-            <div class="chairs">    
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-            </div>
-            <div class="flex">
-                <app-chair [rotation]="270"></app-chair>
-                <div class="card" ><h1>EMPTY</h1></div>
-                <app-chair [rotation]="90"></app-chair>
-            </div>
-            <div class="chairs">    
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-            </div>
-        </div>
-        <div class="table">
-            <div class="chairs">    
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-            </div>
-            <div class="flex">
-                <app-chair [rotation]="270"></app-chair>
-                <div class="card" ><h1>EMPTY</h1></div>
-                <app-chair [rotation]="90"></app-chair>
-            </div>
-            <div class="chairs">    
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-            </div>
-        </div>
-        
-        <div class="table">
-            <div class="chairs">    
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-            </div>
-            <div class="flex">
-                <app-chair [rotation]="270"></app-chair>
-                <div class="card" ><h1>EMPTY</h1></div>
-                <app-chair [rotation]="90"></app-chair>
-            </div>
-            <div class="chairs">    
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-            </div>
-        </div>
-        <div class="table">
-            <div class="chairs">    
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-            </div>
-            <div class="flex">
-                <app-chair [rotation]="270"></app-chair>
-                <div class="card" ><h1>EMPTY</h1></div>
-                <app-chair [rotation]="90"></app-chair>
-            </div>
-            <div class="chairs">    
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-            </div>
-        </div>
-        <div class="table">
-            <div class="chairs">    
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-            </div>
-            <div class="flex">
-                <app-chair [rotation]="270"></app-chair>
-                <div class="card" ><h1>EMPTY</h1></div>
-                <app-chair [rotation]="90"></app-chair>
-            </div>
-            <div class="chairs">    
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-            </div>
-        </div>
-        <div class="table">
-            <div class="chairs">    
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-                <app-chair [rotation]="0"></app-chair>
-            </div>
-            <div class="flex">
-                <app-chair [rotation]="270"></app-chair>
-                <div class="card" ><h1>EMPTY</h1></div>
-                <app-chair [rotation]="90"></app-chair>
-            </div>
-            <div class="chairs">    
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-                <app-chair [rotation]="180"></app-chair>
-            </div>
-        </div>
-
+  <h2>TABLES</h2>
+  <div class="tables">
+    <div class="table" *ngFor="let table of tables" [routerLink]="['/cashier/table-details', 1]">
+      <div class="chairs">
+        <app-chair [rotation]="0"></app-chair>
+        <app-chair [rotation]="0"></app-chair>
+        <app-chair [rotation]="0"></app-chair>
+      </div>
+      <div class="flex">
+        <app-chair [rotation]="270"></app-chair>
+        <div class="card"><h1>Table-{{ table.tableNumber }}</h1></div>
+        <app-chair [rotation]="90"></app-chair>
+      </div>
+      <div class="chairs">
+        <app-chair [rotation]="180"></app-chair>
+        <app-chair [rotation]="180"></app-chair>
+        <app-chair [rotation]="180"></app-chair>
+      </div>
     </div>
-
+  </div>
 </div>

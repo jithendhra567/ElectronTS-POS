@@ -3,6 +3,11 @@
   <input type="text" placeholder="" matInput [(ngModel)]="newItem['name']" />
 </mat-form-field>
 
+<mat-form-field appearance="standard">
+  <mat-label>Image URL</mat-label>
+  <input type="text" placeholder="" matInput [(ngModel)]="newItem['image']" />
+</mat-form-field>
+
 <mat-form-field appearance="fill">
   <mat-label>Select a category</mat-label>
   <mat-select [(ngModel)]="newItem['category']" required>
@@ -23,7 +28,7 @@
 </mat-form-field>
 
 <div mat-dialog-actions>
-  <button mat-raised-button [mat-dialog-close]="newItem" [disabled]="!(newItem['name'] && newItem['category'] && newItem['rate'])">
+  <button mat-raised-button color='primary' [mat-dialog-close]="newItem" [disabled]="!(newItem['name'] && newItem['category'] && newItem['rate'])">
     Add
   </button>
   <button mat-raised-button (click)="closeDialog()">Close</button>

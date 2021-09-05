@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { ActivatedRoute } from "@angular/router";
 import { Item } from "../item.model";
 import { ItemService } from "../item.service";
 
@@ -11,6 +10,7 @@ import { ItemService } from "../item.service";
 })
 export class EditItemComponent implements OnInit {
   itemData: Item[] = [];
+  categories: string[] = [];
 
   constructor(
     private is: ItemService,
@@ -19,7 +19,13 @@ export class EditItemComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.itemData = this.is.getItem(Number(this.data.id));
+    this.is.getItem(this.data.id).subscribe(items => {
+      this.itemData = items
+    });
+
+    this.is.categories.subscribe(categories => {
+      this.categories = categories
+    })
   }
 
   closeDialog() {

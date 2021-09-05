@@ -23,7 +23,9 @@ export class ChangeTableComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.data['table1']);
-    this.options = this.ts.tables.map(table => table.tableNumber)
+    this.ts.tables.subscribe(tables => {
+      this.options = tables.map(table => table.tableNumber)
+    })
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(),
       map((value) => this._filter(value))
@@ -33,5 +35,9 @@ export class ChangeTableComponent implements OnInit {
   private _filter(value: number): number[] {
     const filterValue = value;
     return this.options.filter(option => option.toString().includes(value.toString()))
+  }
+
+  dialogClose() {
+    this.dialogRef.close()
   }
 }

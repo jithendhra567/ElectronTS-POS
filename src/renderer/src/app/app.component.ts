@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IpcService } from './ipc.service';
+import { DataService, IpcService } from './ipc.service';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +9,7 @@ import { IpcService } from './ipc.service';
 export class AppComponent {
 
   constructor(private ipcService: IpcService) {
+    //this.ipcService.getData();
   }
 
   clickDevTools() {

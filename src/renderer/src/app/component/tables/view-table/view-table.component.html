@@ -6,7 +6,7 @@
     <p>
       The capacity of this table is {{ table[0].capacity }}
     </p>
-    <div *ngIf="table[0].reserved_status">
+    <div *ngIf="table[0].status">
       <p>This table is reserved for {{ table[0].reserved_people }} people.</p>
     </div>
   </div>

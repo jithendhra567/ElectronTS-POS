@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { DataService } from "src/app/ipc.service";
 import { AddTableComponent } from "./add-table/add-table.component";
 import { Table } from "./table.model";
 import { TableService } from "./table.service";
@@ -9,7 +11,7 @@ import { ViewTableComponent } from "./view-table/view-table.component";
 @Component({
   selector: "app-table",
   templateUrl: "./table.component.html",
-  styleUrls: ["./table.component.css"],
+  styleUrls: ["./table.component.scss"],
 })
 export class TableComponent implements OnInit {
   tableList: Table[] = [];
@@ -20,17 +22,14 @@ export class TableComponent implements OnInit {
   constructor(
     private ts: TableService,
     private dialog: MatDialog,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
-    this.tableList = this.ts.tables;
-    this.emptyTableList = this.tableList.filter(
-      (table) => table.reserved_status === false
-    );
-    this.reservedTableList = this.tableList.filter(
-      (table) => table.reserved_status === true
-    );
+    this.ts.tables.subscribe(tables => {
+      this.tableList = tables
+    })
   }
 
   openModal() {
@@ -50,5 +49,13 @@ export class TableComponent implements OnInit {
     this.bottomSheet.open(ViewTableComponent, {
       data: { id: num }
     });
+  }
+
+  save(){
+    DataService.save('tables',this.tableList);
+    this.openSnackBar('saved', 'close')
+  }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }

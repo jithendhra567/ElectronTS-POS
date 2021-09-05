@@ -24,7 +24,9 @@ export class AssignCategoryComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.categories = this.is.categories;
+    this.is.categories.subscribe(categories => {
+      this.categories = categories
+    });
   }
 
   addCategory() {
@@ -41,8 +43,7 @@ export class AssignCategoryComponent implements OnInit {
     for(var i of items) {
       this.items.push(i.value)
     }
-    console.log(category)
-    this.is.assignCategory(this.items, category);
+    this.is.assignCategory(this.items, category).subscribe();
   }
 
   dialogClose() {
