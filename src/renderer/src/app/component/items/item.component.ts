@@ -114,7 +114,7 @@ export class ItemComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((data) => {
       if (data) {
-        this.is.addItem(data.name, data.category, data.rate);
+        this.is.addItem(data.name, data.category, data.rate, data.image);
       }
       this.displayItems(this.prev_cat);
     });

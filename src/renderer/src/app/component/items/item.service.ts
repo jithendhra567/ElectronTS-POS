@@ -119,7 +119,8 @@ export class ItemService implements OnInit {
       .toPromise()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          allItems.push(doc.data()['item']);
+          const data: any = doc.data();
+          allItems.push(data);
         });
         this._items.next(allItems);
         this.itemInfo = allItems;
@@ -127,7 +128,7 @@ export class ItemService implements OnInit {
       .catch((err) => console.log(err));
   }
 
-  addItem(name: string, cat: string, rate: number) {
+  addItem(name: string, cat: string, rate: number, image: string) {
     this.getLength().subscribe();
     var iid = this.db.createId();
     const item = {
@@ -137,12 +138,12 @@ export class ItemService implements OnInit {
       rate: rate,
       stock: 10,
       tags: [],
-      image: "",
+      image: image,
     };
     this.itemInfo.push(item);
     this.itemData
       .doc(iid)
-      .set({ item })
+      .set(item)
       .then(() => this.fetchItems())
       .catch((err) => console.log(err));
   }
@@ -161,7 +162,7 @@ export class ItemService implements OnInit {
     this.itemInfo[ind] = editedItem
     return this.itemData
       .doc(id)
-      .set({ item: editedItem }, { merge: false })
+      .set(editedItem, { merge: false })
       .then(() => this.fetchItems())
       .catch((err) => console.log(err));
   }
@@ -170,8 +171,7 @@ export class ItemService implements OnInit {
     let ind = this.itemInfo.findIndex((item: any) => item.itemId === id);
     this.itemInfo.splice(ind, 1);
     return this.itemData
-      .doc()
-      .set({ item: this.itemInfo }, { merge: false })
+      .doc().delete()
       .then(() => this.fetchItems())
       .catch((err) => console.log(err));
   }

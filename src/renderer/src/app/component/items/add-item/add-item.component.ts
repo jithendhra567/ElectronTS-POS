@@ -10,10 +10,11 @@ import { ItemService } from "../item.service";
   styleUrls: ["./add-item.component.css"],
 })
 export class AddItemComponent implements OnInit {
-  newItem: { name: string; category: string; rate: number } = {
+  newItem: { name: string; category: string; rate: number, image: string } = {
     name: "",
     category: "",
     rate: 0,
+    image: ""
   };
 
   categories: string[] = [];
