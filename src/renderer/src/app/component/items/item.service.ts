@@ -148,7 +148,7 @@ export class ItemService implements OnInit {
       .catch((err) => console.log(err));
   }
 
-  editItem(id: string, name: string, cat: string, rate: number) {
+  editItem(id: string, name: string, cat: string, rate: number, image: string) {
     let editedItem = {
       itemId: id,
       itemName: name,
@@ -156,7 +156,7 @@ export class ItemService implements OnInit {
       rate: rate,
       stock: 10,
       tags: [],
-      image: "",
+      image: image,
     };
     let ind = this.itemInfo.findIndex((item: any) => item.itemId === id)
     this.itemInfo[ind] = editedItem

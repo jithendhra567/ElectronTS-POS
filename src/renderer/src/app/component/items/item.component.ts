@@ -126,12 +126,14 @@ export class ItemComponent implements OnInit {
       data: { id: id },
     });
     dialogRef.afterClosed().subscribe((data) => {
+      console.log(data);
       if (data)
         this.is.editItem(
           data.itemId,
           data.itemName,
           data.categoryName,
-          data.rate
+          data.rate,
+          data.image
         );
       this.displayItems(this.prev_cat);
     });
