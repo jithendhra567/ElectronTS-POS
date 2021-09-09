@@ -23,10 +23,9 @@ export class ItemComponent implements OnInit {
   categories: string[] = [];
   public items: Item[] = [];
   public noCategoryItems: Item[] = [];
-  canDisplay = false;
   prev_cat = "";
 
-  displayedColumns: string[] = ["id", "name", "rate", "edit", "delete"];
+  displayedColumns: string[] = ["cat", "name", "rate", "edit", "delete"];
   dataSource!: MatTableDataSource<Item>;
   // expandedElement: Item | null
 
@@ -46,6 +45,9 @@ export class ItemComponent implements OnInit {
     });
     this.is.items.subscribe((items) => {
       this.items = items;
+      this.dataSource = new MatTableDataSource(this.items);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 
@@ -53,39 +55,20 @@ export class ItemComponent implements OnInit {
     this.is.items.subscribe((items) => {
       this.items = items;
     });
-    if (this.prev_cat === "") {
-      this.prev_cat = category;
-    }
-    if (this.canDisplay === false) {
-      this.canDisplay = true;
-      this.items = this.items.filter((item) => item.categoryName === category);
-    } else if (this.canDisplay === true) {
-      if (this.prev_cat === category) {
-        this.canDisplay = false;
-      } else {
-        this.items = this.items.filter(
-          (item) => item.categoryName === category
-        );
-      }
-    }
+    this.items = this.items.filter(
+      (item) => item.categoryName === category
+    );
     this.prev_cat = category;
     this.dataSource = new MatTableDataSource(this.items);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  displayNoCategory() {
-    this.canDisplay = true;
-    this.prev_cat = "no cat";
+  async displayAll() {
     this.is.items.subscribe((items) => {
-      this.noCategoryItems = items.filter((item) => {
-        for (var i of this.categories) {
-          if (item.categoryName === i) return false;
-        }
-        return item;
-      });
+      this.items = items;
     });
-    this.dataSource = new MatTableDataSource(this.noCategoryItems);
+    this.dataSource = new MatTableDataSource(this.items);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -135,7 +118,6 @@ export class ItemComponent implements OnInit {
           data.rate,
           data.image
         );
-      this.displayItems(this.prev_cat);
     });
   }
 
@@ -156,7 +138,7 @@ export class ItemComponent implements OnInit {
       data: { itemList: this.noCategoryItems },
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.displayNoCategory();
+      this.displayAll();
     });
   }
 
