@@ -3,7 +3,6 @@ import * as path from 'path';
 import { DtoSystemInfo } from '../ipc-dtos/dtosysteminfo';
 import * as os from 'os';
 import * as fs from 'fs';
-import {PosPrinter} from 'electron-pos-printer'
 
 let win: BrowserWindow | null = null;
 
@@ -60,6 +59,7 @@ ipcMain.on('request-systeminfo', () => {
 
 ipcMain.on('get-data', ()=>{
   !fs.existsSync("data") && fs.mkdirSync("data");
+  !fs.existsSync(path.join(app.getPath('documents'), "/bills")) && fs.mkdirSync(path.join(app.getPath('documents'), "/bills"));
   let items =  [];
   let tables = [];
   let categories = [];
@@ -94,11 +94,15 @@ ipcMain.on('categories', (event, data)=>{
 });
 
 ipcMain.on('print', (event, data:any)=>{
+  console.log(data);
   const win2 = new BrowserWindow({
     height: 600,
-    width: 300
+    width: 400
   });
-  win2.loadFile(path.join(app.getAppPath(), 'print.html'));
+  const fileName = "print"+new Date().getTime()+".html";
+  fs.writeFileSync(path.join(app.getPath('documents'), "/bills/"+fileName),data[0]);
+  win2.title = path.join(app.getPath('documents'), "/bills/"+fileName);
+  win2.loadFile(path.join(app.getPath('documents'), "/bills/"+fileName));
   win2.once('ready-to-show', () => {
     win2.webContents.print();
   })
