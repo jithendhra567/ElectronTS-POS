@@ -27,7 +27,7 @@ import { ItemService } from 'src/app/component/items/item.service';
 // ];
 
 export interface ItemData {
-  id: number,
+  id: string,
   name: string,
   category: string,
   rate: number,
@@ -71,7 +71,8 @@ export class AddItemComponent implements OnInit {
           }
         )
       }
-      this.dataSource = new MatTableDataSource(this.newData)
+      this.dataSource = new MatTableDataSource(this.newData);
+      this.dataSource.paginator = this.paginator;
     })
   }
 
@@ -89,16 +90,25 @@ export class AddItemComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  addToCart(row: ItemData){
-    this.newData[+row.id - 1].isAdded = true;
+  addToCart(row: ItemData) {
+    this.newData[this.getIndexFromId(row.id)].isAdded = true;
     this.dataSource = new MatTableDataSource(this.newData);
     this.dataSource.paginator = this.paginator;
   }
 
   removeFromCart(row: ItemData){
-    this.newData[+row.id-1].isAdded=false;
+    this.newData[this.getIndexFromId(row.id)].isAdded=false;
     this.dataSource = new MatTableDataSource(this.newData);
     this.dataSource.paginator = this.paginator;
+  }
+
+  getIndexFromId(id: string) {
+    let i = -1;
+    this.newData.forEach((data, index) => {
+      if (data.id === id)
+        i = index;
+    });
+    return i;
   }
 
   cancel(){

@@ -16,6 +16,11 @@
   </mat-select>
 </mat-form-field>
 
+<mat-form-field appearance="standard">
+  <mat-label>Image URL</mat-label>
+  <input type="text" placeholder="" matInput [(ngModel)]="itemData[0].image" />
+</mat-form-field>
+
 <mat-form-field appearance="outline">
   <mat-label>Enter the rate of the item</mat-label>
   <input matInput type="text" name="rt" [(ngModel)]="itemData[0].rate">
@@ -26,7 +31,7 @@
     <mat-icon>edit</mat-icon>
     Edit
   </button>
-  <button mat-raised-button color="primary" (click)="closeDialog()">
+  <button mat-raised-button color="secondary" (click)="closeDialog()">
     <mat-icon>close</mat-icon>
     Close
   </button>

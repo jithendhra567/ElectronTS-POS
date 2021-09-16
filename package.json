@@ -69,8 +69,10 @@
     "zone.js": "^0.11.1"
   },
   "dependencies": {
+    "@angular/fire": "^6.1.5",
     "@types/electron-json-storage": "^4.5.0",
     "electron-json-storage": "^4.5.0",
-    "electron-pos-printer": "^1.2.4"
+    "electron-pos-printer": "^1.2.4",
+    "firebase": "^8.9.1"
   }
 }

@@ -3,7 +3,6 @@ import * as path from 'path';
 import { DtoSystemInfo } from '../ipc-dtos/dtosysteminfo';
 import * as os from 'os';
 import * as fs from 'fs';
-import {PosPrinter} from 'electron-pos-printer'
 
 let win: BrowserWindow | null = null;
 

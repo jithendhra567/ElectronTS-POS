@@ -19,38 +19,35 @@ import { MatSnackBar } from "@angular/material/snack-bar";
   templateUrl: "./item.component.html",
   styleUrls: ["./item.component.css"],
 })
-export class ItemComponent implements OnInit, AfterViewInit {
+export class ItemComponent implements OnInit {
   categories: string[] = [];
   public items: Item[] = [];
   public noCategoryItems: Item[] = [];
-  canDisplay = false;
   prev_cat = "";
 
-  displayedColumns: string[] = ["id", "name", "rate", "edit", "delete"];
+  displayedColumns: string[] = ["cat", "name", "rate", "edit", "delete"];
   dataSource!: MatTableDataSource<Item>;
   // expandedElement: Item | null
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dialog: MatDialog, private is: ItemService
-    ,private _snackBar: MatSnackBar) {}
+  constructor(
+    private dialog: MatDialog,
+    private is: ItemService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.is.categories.subscribe((categories) => {
       this.categories = categories;
+      console.log(this.categories);
     });
     this.is.items.subscribe((items) => {
       this.items = items;
-    });
-  }
-
-  ngAfterViewInit() {
-    this.is.categories.subscribe((categories) => {
-      this.categories = categories;
-    });
-    this.is.items.subscribe((items) => {
-      this.items = items;
+      this.dataSource = new MatTableDataSource(this.items);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 
@@ -58,39 +55,20 @@ export class ItemComponent implements OnInit, AfterViewInit {
     this.is.items.subscribe((items) => {
       this.items = items;
     });
-    if (this.prev_cat === "") {
-      this.prev_cat = category;
-    }
-    if (this.canDisplay === false) {
-      this.canDisplay = true;
-      this.items = this.items.filter((item) => item.categoryName === category);
-    } else if (this.canDisplay === true) {
-      if (this.prev_cat === category) {
-        this.canDisplay = false;
-      } else {
-        this.items = this.items.filter(
-          (item) => item.categoryName === category
-        );
-      }
-    }
+    this.items = this.items.filter(
+      (item) => item.categoryName === category
+    );
     this.prev_cat = category;
     this.dataSource = new MatTableDataSource(this.items);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  displayNoCategory() {
-    this.canDisplay = true;
-    this.prev_cat = "no cat";
+  async displayAll() {
     this.is.items.subscribe((items) => {
-      this.noCategoryItems = items.filter((item) => {
-        for (var i of this.categories) {
-          if (item.categoryName === i) return false;
-        }
-        return item;
-      });
+      this.items = items;
     });
-    this.dataSource = new MatTableDataSource(this.noCategoryItems);
+    this.dataSource = new MatTableDataSource(this.items);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -100,7 +78,9 @@ export class ItemComponent implements OnInit, AfterViewInit {
       width: "300px",
     });
     dialogRef.afterClosed().subscribe((data) => {
-      if (data) this.is.addCategory(data).subscribe();
+      if (data) {
+        this.is.addCategory(data);
+      }
     });
   }
 
@@ -117,43 +97,38 @@ export class ItemComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((data) => {
       if (data) {
-        this.is
-          .addItem(data.name, data.category, data.rate)
-          .subscribe((items) => {
-            this.items = items;
-          });
+        this.is.addItem(data.name, data.category, data.rate, data.image);
       }
-      this.displayItems(this.prev_cat)
+      this.displayItems(this.prev_cat);
     });
   }
 
-  editItem(id: number) {
+  editItem(id: string) {
     const dialogRef = this.dialog.open(EditItemComponent, {
       width: "300px",
       data: { id: id },
     });
     dialogRef.afterClosed().subscribe((data) => {
+      console.log(data);
       if (data)
-        this.is
-          .editItem(data.itemId, data.itemName, data.categoryName, data.rate)
-          .subscribe((items) => {
-            this.items = items;
-          });
-      this.displayItems(this.prev_cat)
+        this.is.editItem(
+          data.itemId,
+          data.itemName,
+          data.categoryName,
+          data.rate,
+          data.image
+        );
     });
   }
 
-  deleteItem(id: number) {
+  deleteItem(id: string) {
     const dialogRef = this.dialog.open(DeleteItemComponent, {
       width: "300px",
       data: { id: id },
     });
     dialogRef.afterClosed().subscribe((val) => {
-      if (val === true)
-        this.is.deleteItem(id).subscribe((items) => {
-          this.items = items;
-        });
-      this.displayItems(this.prev_cat)
+      if (val === true) this.is.deleteItem(id);
+      this.displayItems(this.prev_cat);
     });
   }
 
@@ -163,14 +138,14 @@ export class ItemComponent implements OnInit, AfterViewInit {
       data: { itemList: this.noCategoryItems },
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.displayNoCategory()
+      this.displayAll();
     });
   }
 
-  save(){
-    DataService.save('items',this.items);
-    DataService.save('categories',this.categories);
-    this.openSnackBar('saved', 'close')
+  save() {
+    DataService.save("items", this.items);
+    DataService.save("categories", this.categories);
+    this.openSnackBar("saved", "close");
   }
 
   openSnackBar(message: string, action: string) {
