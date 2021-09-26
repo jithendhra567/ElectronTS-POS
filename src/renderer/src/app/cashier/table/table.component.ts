@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Table } from 'src/app/component/tables/table.model';
 import { TableService } from 'src/app/component/tables/table.service';
 
