@@ -94,15 +94,16 @@ ipcMain.on('categories', (event, data)=>{
 });
 
 ipcMain.on('print', (event, data:any)=>{
-  console.log(data);
+  const dir = path.join(app.getPath('documents'), "/bills/");
+  !fs.existsSync(dir) && fs.mkdirSync(dir);
   const win2 = new BrowserWindow({
     height: 600,
     width: 400
   });
   const fileName = "print"+new Date().getTime()+".html";
-  fs.writeFileSync(path.join(app.getPath('documents'), "/bills/"+fileName),data[0]);
-  win2.title = path.join(app.getPath('documents'), "/bills/"+fileName);
-  win2.loadFile(path.join(app.getPath('documents'), "/bills/"+fileName));
+  fs.writeFileSync(dir+fileName,data[0]);
+  win2.title = dir+fileName;
+  win2.loadFile(dir+fileName);
   win2.once('ready-to-show', () => {
     win2.webContents.print();
   })
