@@ -21,7 +21,7 @@ export class LoginComponent {
       email === "admin@olio.com" &&
       password === "olio@olio.com"
     ) {
-      this.router.navigateByUrl("/started");
+      this.router.navigateByUrl("/admin");
     } else if (
       email === "cashier@olio.com" &&
       password === "olio@olio.com"
