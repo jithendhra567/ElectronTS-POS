@@ -60,7 +60,7 @@ export class TableDetailsComponent implements OnInit {
   constructor(public dialog: MatDialog, private db: AngularFirestore,public route:ActivatedRoute) {
     this.tableNumber = route.snapshot.params.tableId;
     db.collection('hotels').doc('POS').get().toPromise().then(data => {
-      const val: HotelDetails = data.data();
+      const val: any = data.data();//val: HotelDetais
       this.currentTable = this.getTable(val.tables, this.tableNumber);
       this.currentTable.order.forEach(item => {
         this.items.push({
