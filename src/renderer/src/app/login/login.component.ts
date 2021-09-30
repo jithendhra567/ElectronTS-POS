@@ -18,13 +18,13 @@ export class LoginComponent {
 
   onLogin(email: string, password:string) {
     if (
-      email === "admin@olio.com" &&
-      password === "olio@olio.com"
+      email === "admin" &&
+      password === "olio"
     ) {
       this.router.navigateByUrl("/admin");
     } else if (
-      email === "cashier@olio.com" &&
-      password === "olio@olio.com"
+      email === "cashier" &&
+      password === "olio"
     ) {
       this.router.navigateByUrl("/cashier");
     }

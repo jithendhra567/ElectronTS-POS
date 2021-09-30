@@ -13,6 +13,7 @@ import { DeleteItemComponent } from "./delete-item/delete-item.component";
 import { AssignCategoryComponent } from "./assign-category/assign-category.component";
 import { DataService } from "src/app/ipc.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 
 @Component({
   selector: "app-item",
@@ -25,9 +26,18 @@ export class ItemComponent implements OnInit {
   public noCategoryItems: Item[] = [];
   prev_cat = "";
 
-  displayedColumns: string[] = ["cat", "name", "rate", "edit", "delete"];
+  displayedColumns: string[] = ["image", "name", "cat", "rate", "edit", "delete"];
   dataSource!: MatTableDataSource<Item>;
-  // expandedElement: Item | null
+
+  // event type CdkDragDrop<Item[]>
+  drop(event: any) {
+    const temp = this.items[event.previousIndex];
+    this.items.splice(event.previousIndex, 1);
+    this.items.splice(event.currentIndex, 0, temp);
+    this.dataSource = new MatTableDataSource(this.items);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -41,7 +51,6 @@ export class ItemComponent implements OnInit {
   ngOnInit() {
     this.is.categories.subscribe((categories) => {
       this.categories = categories;
-      console.log(this.categories);
     });
     this.is.items.subscribe((items) => {
       this.items = items;

@@ -2,17 +2,18 @@
   <div class="nav-bar">
     <div class="expansion-panel-container">
       <mat-accordion>
-        <mat-expansion-panel class="expansion-panel" [expanded]="true">
+        <mat-expansion-panel style="background-color: rgb(245, 245, 245); border-radius: 0px;" class="expansion-panel" [expanded]="true">
           <mat-expansion-panel-header>
-            <mat-panel-title>select a category</mat-panel-title>
+            <mat-panel-title style="font-weight: 400; font-size: 18px;">select a category</mat-panel-title>
           </mat-expansion-panel-header>
           <div class="categories" *ngFor="let category of categories">
-            <button mat-raised-button color="primary" class="category" (click)="displayItems(category)">
-              <mat-icon>label</mat-icon>
+            <button mat-raised-button class="category" (click)="displayItems(category)">
+              <mat-icon color="warn">label_important</mat-icon>
               {{ category }}
             </button>
           </div>
-          <button mat-raised-button class="category" color="warn" (click)="displayAll()">
+          <button mat-raised-button class="category" color="primary" (click)="displayAll()">
+            <mat-icon>list</mat-icon>
             All Items
           </button>
         </mat-expansion-panel>
@@ -20,82 +21,74 @@
     </div>
     <div class="container">
       <div class="buttons">
-        <button mat-raised-button color="accent" (click)="addCategory()">
+        <button mat-raised-button style="margin-left: 10px;" color="primary" (click)="addCategory()">
           <mat-icon>add</mat-icon>
           Add Category
         </button>
-        <button mat-raised-button color="accent" (click)="editCategories()">
+        <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="editCategories()">
           <mat-icon>edit</mat-icon>
           Edit Categories
         </button>
-        <button mat-raised-button color="accent">
+        <button mat-raised-button color="primary" style="margin-left: 10px;">
           <mat-icon>zoom_in</mat-icon>
           Check Discounts
         </button>
+        <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="addItem()">
+          <mat-icon>add</mat-icon>
+          Add Item
+        </button>
       </div>
-      <div class="section">
-        <div class="item-table">
-          <div class="table-align">
-            <div class="button-container">
-              <button
-                *ngIf="prev_cat == 'no cat' && noCategoryItems.length > 0"
-                mat-raised-button
-                class="add-item-button"
-                style="margin-right: 10px"
-                (click) = "assignCategory()"
-              >
-                Assign a Category
+      <div class="table-align">
+        <table multiTemplateDataRows mat-table matSort [dataSource]="dataSource" cdkDropList [cdkDropListData]="dataSource" (cdkDropListDropped)="drop($event)">
+          <ng-container matColumnDef="image">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Image</th>
+            <td mat-cell *matCellDef="let row">
+              <img class="item-icon" [src]="row.image" alt="" srcset="">
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Item Name</th>
+            <td mat-cell *matCellDef="let row">{{ row.itemName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="cat">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+            <td mat-cell *matCellDef="let row">{{ row.categoryName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="rate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Rate</th>
+            <td mat-cell *matCellDef="let row">{{ row.rate }}</td>
+          </ng-container>
+          <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Edit</th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-button class="button" (click)="editItem(row.itemId)">
+                <mat-icon>edit</mat-icon>
               </button>
-              <button mat-raised-button class="add-item-button" (click)="addItem()">
-                Add Item
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Delete</th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-button class="button" (click)="deleteItem(row.itemId)">
+                <mat-icon>delete</mat-icon>
               </button>
-            </div>
-
-            <table multiTemplateDataRows mat-table matSort [dataSource]="dataSource">
-              <ng-container matColumnDef="cat">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-                <td mat-cell *matCellDef="let row">{{ row.categoryName }}</td>
-              </ng-container>
-              <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Item Name</th>
-                <td mat-cell *matCellDef="let row">{{ row.itemName }}</td>
-              </ng-container>
-              <ng-container matColumnDef="rate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Rate</th>
-                <td mat-cell *matCellDef="let row">{{ row.rate }}</td>
-              </ng-container>
-              <ng-container matColumnDef="edit">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Edit</th>
-                <td mat-cell *matCellDef="let row">
-                  <button mat-button class="button" (click)="editItem(row.itemId)">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="delete">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Delete</th>
-                <td mat-cell *matCellDef="let row">
-                  <button mat-button class="button" (click)="deleteItem(row.itemId)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </td>
-              </ng-container>
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr
-                mat-row
-                *matRowDef="let row; columns: displayedColumns"
-                class="item-row"
-              ></tr>
-              <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">No data matching the filter</td>
-              </tr>
-            </table>
-            <mat-paginator
-              [pageSizeOptions]="[5, 10, 25]"
-              showFirstLastButtons
-            ></mat-paginator>
-          </div>
-        </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            class="item-row"
+            cdkDragLockAxis="y" cdkDrag [cdkDragData]="row"
+          ></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter</td>
+          </tr>
+        </table>
+        <mat-paginator
+          [pageSizeOptions]="[5, 10, 25]"
+          showFirstLastButtons
+        ></mat-paginator>
       </div>
     </div>
   </div>

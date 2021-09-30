@@ -171,7 +171,7 @@ export class ItemService implements OnInit {
     let ind = this.itemInfo.findIndex((item: any) => item.itemId === id);
     this.itemInfo.splice(ind, 1);
     return this.itemData
-      .doc().delete()
+      .doc(id).delete()
       .then(() => this.fetchItems())
       .catch((err) => console.log(err));
   }

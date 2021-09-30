@@ -1,10 +1,12 @@
-.item-container {
-  margin-top: 3%;
-}
-
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400&display=swap');
 .nav-bar {
   display: flex;
 }
+
+/* *:not(mat-icon){
+  font-family: 'Zilla Slab', serif;
+} */
 
 .expansion-panel {
   height: 100vh;
@@ -16,25 +18,45 @@
 
 .container {
   width: 100%;
+  background-color: rgb(245, 245, 245);
 }
 
 .buttons {
   display: flex;
-  justify-content: space-evenly;
-  margin-bottom: 5%;
+  justify-content: flex-end;
+  padding: 20px;
 }
 
 .category {
   margin: 5px 0;
+  font-size: 14px;
 }
 
 .item-table {
   width: 100%;
 }
 
+.item-icon {
+  width: 40px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.item-row{
+  background-color: white;
+  cursor: pointer;
+}
+
 .table-align {
-  width: 75%;
+  width: 90%;
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
   margin: auto;
+}
+
+.section{
+  border-radius: 5px;
 }
 
 .button-container {
@@ -43,6 +65,13 @@
 
 table {
   width: 100%;
+  border-radius: 5px 5px 0 0;
+  overflow:hidden !important;
+}
+
+mat-paginator{
+  border-radius: 0 0 5px 5px;
+  overflow:hidden !important;
 }
 
 .button {
