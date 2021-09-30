@@ -43,7 +43,7 @@ export class ItemService implements OnInit {
       .then((data) => {
         if (data.data()) {
           const d: any = data.data();
-          allCategories = d["categories"];
+          allCategories = d["categories"] ?? [];
           this.categoryInfo = allCategories;
           this._categories.next(allCategories);
         }
