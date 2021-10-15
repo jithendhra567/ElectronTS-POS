@@ -15,7 +15,7 @@
 </mat-selection-list>
 
 <mat-dialog-actions>
-  <button mat-button (click)="deleteCategories(cats.selectedOptions.selected)" [disabled]="!cats.selectedOptions.selected.length">
+  <button mat-button color="warn" (click)="deleteCategories(cats.selectedOptions.selected)" [disabled]="!cats.selectedOptions.selected.length">
     Delete
   </button>
   <button mat-button (click)="dialogClose()">

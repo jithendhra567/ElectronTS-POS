@@ -96,6 +96,7 @@ export class ItemComponent implements OnInit {
   editCategories() {
     const dialogRef = this.dialog.open(EditCategoriesComponent, {
       width: "500px",
+      height: '80%'
     });
     dialogRef.afterClosed().subscribe();
   }

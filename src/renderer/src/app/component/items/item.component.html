@@ -1,23 +1,17 @@
 <div class="item-container">
   <div class="nav-bar">
     <div class="expansion-panel-container">
-      <mat-accordion>
-        <mat-expansion-panel style="background-color: rgb(245, 245, 245); border-radius: 0px;" class="expansion-panel" [expanded]="true">
-          <mat-expansion-panel-header>
-            <mat-panel-title style="font-weight: 400; font-size: 18px;">select a category</mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="categories" *ngFor="let category of categories">
-            <button mat-raised-button class="category" (click)="displayItems(category)">
-              <mat-icon color="warn">label_important</mat-icon>
-              {{ category }}
-            </button>
-          </div>
-          <button mat-raised-button class="category" color="primary" (click)="displayAll()">
-            <mat-icon>list</mat-icon>
-            All Items
-          </button>
-        </mat-expansion-panel>
-      </mat-accordion>
+      <h2 style="font-weight: 400; font-size: 18px; margin: 0; background-color: darkslategrey; color: white; border-radius: 4px; padding: 10px; text-align: center;">select a category</h2>
+      <div class="categories" *ngFor="let category of categories">
+        <button mat-raised-button class="category" (click)="displayItems(category)">
+          <mat-icon color="warn">label_important</mat-icon>
+          {{ category }}
+        </button>
+      </div>
+      <button mat-raised-button class="category" color="primary" (click)="displayAll()">
+        <mat-icon>list</mat-icon>
+        All Items
+      </button>
     </div>
     <div class="container">
       <div class="buttons">
@@ -28,10 +22,6 @@
         <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="editCategories()">
           <mat-icon>edit</mat-icon>
           Edit Categories
-        </button>
-        <button mat-raised-button color="primary" style="margin-left: 10px;">
-          <mat-icon>zoom_in</mat-icon>
-          Check Discounts
         </button>
         <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="addItem()">
           <mat-icon>add</mat-icon>

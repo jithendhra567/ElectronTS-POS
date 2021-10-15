@@ -8,12 +8,11 @@
   font-family: 'Zilla Slab', serif;
 } */
 
-.expansion-panel {
-  height: 100vh;
-}
-
 .expansion-panel-container {
-  width: 25%;
+  height: 100%;
+  padding: 10px;
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+  background-color: rgb(245, 245, 245);
 }
 
 .container {
