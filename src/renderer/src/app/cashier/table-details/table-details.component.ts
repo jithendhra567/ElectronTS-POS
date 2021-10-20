@@ -71,7 +71,8 @@ export class TableDetailsComponent implements OnInit {
           quantity: 1,
           isAdded: false
         })
-      })
+      });
+      this.items.forEach(item=>this.total+=(item.quantity*item.rate));
       this.selectedItems = new MatTableDataSource(this.items);
     })
     this.selectedItems = new MatTableDataSource(this.items);
@@ -122,6 +123,11 @@ export class TableDetailsComponent implements OnInit {
     this.selectedItems = new MatTableDataSource(this.items);
     this.total=0;
     this.items.forEach(item=>this.total+=(item.quantity*item.rate));
+  }
+
+  printBill(content:HTMLElement) {
+    console.log(content.outerHTML.toString());
+    window.api.electronIpcSend('print',content.outerHTML.toString());
   }
 
 }

@@ -46,44 +46,79 @@
             </div>
         </div>
         <div class="bill">
-            <mat-card class="billcontent">
-                <h4>OLIO BILLING</h4>
-                <div class="margin"></div>
-                <div class="header">
-                  <h2>HOTEL</h2>
-                  <h6>TAG LINE</h6>
-                  <p>Address: street, city, country, pincode</p>
+          <mat-card class="billcontent" id="billcontent">
+            <div #content>
+              <h4>OLIO BILLING</h4>
+              <div class="margin"></div>
+              <div class="header"
+              style="text-align: center;
+                margin-top: 20px;
+                margin-bottom: 20px;">
+                <h2 style="margin: 1px;">HOTEL</h2>
+                <h6 style="margin: 1px;">TAG LINE</h6>
+                <p style="margin: 2px; font-size: 12px;">Address: street, city, country, pincode</p>
+              </div>
+              <div class="margin" style="
+                background-color: rgba(0, 0, 0, 0.3);
+                width: 100%;
+                height: 1px;"></div>
+              <div class="bill-heading"
+                style="
+                margin-top: 10px;
+                display: flex;
+                justify-content: space-between;
+                font-size: 18px;
+                font-weight: 500;">
+                <p class="name" style="margin: 0;
+                font-size: 14px;">Item</p>
+                <p class="cost" style="margin: 0;
+                font-size: 14px;">price</p>
+              </div>
+              <div class="margin" style="background-color: rgba(0, 0, 0, 0.3);
+                    width: 100%;
+                    height: 1px;"></div>
+              <div class="bill-item" style="
+                    margin-top: 10px;
+                    display: flex;
+                    justify-content: space-between;" *ngFor="let item of items">
+                <p class="name" style="margin: 0;
+                font-size: 14px;">{{item.name}}   x{{item.quantity}}</p>
+                <p class="cost" style="margin: 0;
+                font-size: 14px;">{{item.rate*item.quantity}}/-</p>
+              </div>
+              <div class="margin" style="background-color: rgba(0, 0, 0, 0.5);
+                    width: 100%;
+                    height: 1px;"></div>
+              <div class="final" style="font-weight: 600;">
+                <div style="  margin-top: 10px;
+                display: flex;
+                justify-content: space-between;">
+                  <p style="margin: 0;
+                  font-size: 14px;">GST</p>
+                  <p style="margin: 0;
+                  font-size: 14px;">--</p>
                 </div>
-                <div class="margin" style="background-color: rgba(0, 0, 0, 0.2);"></div>
-                <div class="bill-heading">
-                  <p class="name">Item</p>
-                  <p class="cost">price</p>
+                <div style="  margin-top: 10px;
+                display: flex;
+                justify-content: space-between;">
+                  <p style="margin: 0;
+                  font-size: 14px;">discount</p>
+                  <p style="margin: 0;
+                  font-size: 14px;">0</p>
                 </div>
-                <div class="margin" style="background-color: rgba(0, 0, 0, 0.2);"></div>
-                <div class="bill-item" *ngFor="let item of items">
-                  <p class="name">{{item.name}}   x{{item.quantity}}</p>
-                  <p class="cost">{{item.rate*item.quantity}}/-</p>
+                <div style="  margin-top: 10px;
+                display: flex;
+                justify-content: space-between;">
+                  <p style="margin: 0;
+                  font-size: 14px;">Total</p>
+                  <p style="margin: 0;
+                  font-size: 14px;">{{total}}</p>
                 </div>
-                <div class="margin" style="background-color: rgba(0, 0, 0, 0.2); margin-top: 20px;"></div>
-                <div class="final" style="font-weight: 600;">
-                  <div class="bill-item">
-                    <p class="name">GST</p>
-                    <p class="cost">--</p>
-                  </div>
-                  <div class="bill-item">
-                    <p class="name">discount</p>
-                    <p class="cost">0</p>
-                  </div>
-                  <div class="bill-item">
-                    <p class="name">Total</p>
-                    <p class="cost">{{total}}</p>
-                  </div>
-                </div>
-              </mat-card>
-              <button mat-raised-button color="accent">PRINT KOT</button>
-              <button mat-raised-button color="primary">CHECK OUT</button>
-
-        </div>
+              </div>
+            </div>
+          </mat-card>
+          <button mat-raised-button color="primary" (click)="printBill(content)">PRINT</button>
+      </div>
     </div>
 
 </div>
