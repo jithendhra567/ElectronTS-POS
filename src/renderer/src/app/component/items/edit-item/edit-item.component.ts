@@ -10,7 +10,7 @@ import { ItemService } from "../item.service";
 })
 export class EditItemComponent implements OnInit {
   itemData: Item[] = [];
-  categories: string[] = [];
+  categories: {name: string, image: string}[] = [];
 
   constructor(
     private is: ItemService,

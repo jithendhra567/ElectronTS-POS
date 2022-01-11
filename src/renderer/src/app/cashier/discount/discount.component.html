@@ -1,0 +1,20 @@
+<mat-form-field appearance="fill">
+  <mat-label>Enter Discount Percentage</mat-label>
+  <input [(ngModel)]="discountPercentage" matInput type="number" placeholder="Enter Discount Percentage">
+</mat-form-field>>
+
+<mat-form-field appearance="fill">
+  <mat-label>Enter Discount Rate</mat-label>
+  <input [(ngModel)]="discountRate" matInput type="number" placeholder="Enter Discount Rate">
+</mat-form-field>
+
+<mat-dialog-actions class="actions">
+  <button mat-raised-button color="primary" [mat-dialog-close]="{percentage: discountPercentage, rate: discountRate}">
+    <mat-icon>edit</mat-icon>
+    Edit
+  </button>
+  <button mat-raised-button [mat-dialog-close]>
+    <mat-icon>close</mat-icon>
+    Close
+  </button>
+</mat-dialog-actions>

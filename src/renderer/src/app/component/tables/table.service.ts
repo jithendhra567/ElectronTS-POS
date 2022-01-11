@@ -85,9 +85,16 @@ export class TableService {
     };
     this.tableInfo.push(map);
     return this.tableData
-      .set({ tables: this.tableInfo }, { merge: true })
+      .update({ tables: this.tableInfo })
       .then(() => this.fetchTables())
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.tableData.get().toPromise().then((data) => {
+          const d: any = data.data();
+          d["tables"] = this.tableInfo;
+          console.log(d);
+          // this.tableData.set(d);
+        });
+      });
   }
 
   editTable(
@@ -106,7 +113,7 @@ export class TableService {
     };
     this.tableInfo[tnum - 1] = editedTable;
     return this.tableData
-      .set({ tables: this.tableInfo }, { merge: false })
+      .update({ tables: this.tableInfo })
       .then(() => this.fetchTables())
       .catch((err) => console.log(err));
   }
@@ -114,7 +121,7 @@ export class TableService {
   deleteTable(id: number) {
     this.tableInfo.splice(id - 1, 1);
     return this.tableData
-      .set({ tables: this.tableInfo }, { merge: false })
+      .update({ tables: this.tableInfo })
       .then(() => this.fetchTables())
       .catch((err) => console.log(err));
   }

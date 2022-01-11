@@ -5,7 +5,10 @@
             <button mat-icon-button ><mat-icon>arrow_back</mat-icon></button>
             <h1 class="example-app-name">HOTEL NAME</h1>
         </div>
-        <button class="add" mat-raised-button color="primary" (click)="open()">ADD ITEM</button>
+        <div>
+          <button mat-raised-button style="margin-right: 20px;" color="primary" (click)="addDiscount()">discount</button>
+          <button class="add" style="margin-left: 10px;" mat-raised-button color="primary" (click)="open()">ADD ITEM</button>
+        </div>
       </mat-toolbar>
         <div class="selected">
           <h2 >SELECTED ITEMS</h2>
@@ -25,15 +28,19 @@
               </ng-container>
               <ng-container matColumnDef="rate">
                 <th mat-header-cell *matHeaderCellDef> Rate </th>
-                <td mat-cell *matCellDef="let element"> {{ element.rate }} </td>
+                <td mat-cell *matCellDef="let element">
+                  <div *ngIf="element.rate=='APS'">
+                    <input style="width: 40;" placeholder="Ex. 100" #rate [value]="0" (keyup)="updateRate(element,rate, $event)"/>
+                  </div>
+                  <div *ngIf="element.rate!='APS'">
+                    {{ element.rate }}
+                  </div>
+                </td>
               </ng-container>
               <ng-container matColumnDef="quantity">
                 <th mat-header-cell *matHeaderCellDef> Quantity </th>
                 <td mat-cell *matCellDef="let element">
-                  <mat-form-field style="width: 50px;" appearance="fill">
-                    <mat-label>qty</mat-label>
-                    <input matInput placeholder="Ex. 1" #qty [value]="element.quantity" (keyup)="updateQty(element,qty)"/>
-                  </mat-form-field>
+                  <input style="width: 40;" placeholder="Ex. 1" #qty [value]="element.quantity" (keyup)="updateQty(element,qty)"/>
                 </td>
               </ng-container>
               <ng-container matColumnDef="action">
@@ -100,7 +107,7 @@
                 <p style="margin: 0;
                 font-size: 14px;">GST</p>
                 <p style="margin: 0;
-                font-size: 14px;">--</p>
+                font-size: 14px;">5%</p>
               </div>
               <div style="  margin-top: 10px;
               display: flex;
@@ -108,7 +115,7 @@
                 <p style="margin: 0;
                 font-size: 14px;">discount</p>
                 <p style="margin: 0;
-                font-size: 14px;">0</p>
+                font-size: 14px;">{{discount}}</p>
               </div>
               <div style="  margin-top: 10px;
               display: flex;
@@ -118,10 +125,11 @@
                 <p style="margin: 0;
                 font-size: 14px;">{{total}}</p>
               </div>
-
             </div>
           </div>
         </mat-card>
-        <button mat-raised-button color="primary" (click)="printBill(content)">PRINT</button>
+        <button mat-raised-button color="primary" (click)="printBill(content)">BOT</button>
+        <button mat-raised-button color="primary" (click)="fullDayBill()">Full Day</button>
+
     </div>
   </div>

@@ -57,54 +57,102 @@ ipcMain.on('request-systeminfo', () => {
   }
 });
 
-ipcMain.on('get-data', ()=>{
+ipcMain.on('get-full-day-data', ()=>{
   !fs.existsSync("data") && fs.mkdirSync("data");
   !fs.existsSync(path.join(app.getPath('documents'), "/bills")) && fs.mkdirSync(path.join(app.getPath('documents'), "/bills"));
-  let items =  [];
-  let tables = [];
-  let categories = [];
-  try{
-    items = JSON.parse(fs.readFileSync('data/items.json').toString());
-    categories = JSON.parse(fs.readFileSync('data/categories.json').toString());
-    tables = JSON.parse(fs.readFileSync('data/tables.json').toString());
+  let today = new Date();
+  let dd = today.getDate();
+  let mm = today.getMonth() + 1; //January is 0!
+  let yyyy = today.getFullYear();
+  let date = '';
+  if (dd < 10) date += '0' + dd;
+  else date += dd;
+  if (mm < 10) date += '-0' + mm;
+  else date += '-' + mm;
+  date += '-' + yyyy;
+  const dir = path.join(app.getPath('documents'), "/" + date);
+  //get order items from orderItems.json
+  let orderItems = [];
+  try {
+    orderItems.push(JSON.parse(fs.readFileSync(dir+'/orderItems.json').toString()));
+  } catch (e) {
+    console.log("orderItems not found!", e);
   }
-  catch(e){
-    console.log("data not found!",e);
-  }
-  const data = {
-    items: items,
-    categories: categories,
-    tables: tables
-  }
-  console.log(data)
   if(win)
-    win.webContents.send('data',data);
+    win.webContents.send('data',JSON.stringify(orderItems));
 })
 
-ipcMain.on('tables', (event, data)=>{
-  fs.writeFileSync('data/tables.json', JSON.stringify(data[0]));
+ipcMain.on('orderItems', (event, data) => {
+  //get today date in dd-mm-yyyy format
+  let today = new Date();
+  let dd = today.getDate();
+  let mm = today.getMonth() + 1; //January is 0!
+  let yyyy = today.getFullYear();
+  let date = '';
+  if (dd < 10) date += '0' + dd;
+  else date += dd;
+  if (mm < 10) date += '-0' + mm;
+  else date += '-' + mm;
+  date += '-' + yyyy;
+  const dir = path.join(app.getPath('documents'), "/" + date);
+  data = JSON.parse(data[0]);
+  !fs.existsSync(dir) && fs.mkdirSync(dir);
+  // check the orderItems.json file is present or not
+  let orderItems = [];
+  try {
+    orderItems = (JSON.parse(fs.readFileSync(dir+'/orderItems.json').toString()));
+  } catch (e) {
+    console.log("orderItems not found!", e);
+  }
+  orderItems.push(data);
+  fs.writeFileSync(dir+'/orderItems.json', JSON.stringify(orderItems));
 });
 
-ipcMain.on('items', (event, data)=>{
-  fs.writeFileSync('data/items.json', JSON.stringify(data[0]));
-});
-
-ipcMain.on('categories', (event, data)=>{
-  fs.writeFileSync('data/categories.json', JSON.stringify(data[0]));
-});
-
-ipcMain.on('print', (event, data:any)=>{
+ipcMain.on('print', (event, data: any) => {
   const dir = path.join(app.getPath('documents'), "/bills/");
   !fs.existsSync(dir) && fs.mkdirSync(dir);
   const win2 = new BrowserWindow({
     height: 600,
     width: 400
   });
-  const fileName = "print"+new Date().getTime()+".html";
-  fs.writeFileSync(dir+fileName,data[0]);
-  win2.title = dir+fileName;
-  win2.loadFile(dir+fileName);
+  const fileName = "print" + new Date().getTime() + ".html";
+  fs.writeFileSync(dir + fileName, data[0]);
+  win2.title = dir + fileName;
+  win2.loadFile(dir + fileName);
   win2.once('ready-to-show', () => {
     win2.webContents.print();
   })
-})
+});
+
+//create a new window for printing
+ipcMain.on('fullPrint', (event, data: any) => {
+  const dir = path.join(app.getPath('documents'), "/checkBills/");
+  !fs.existsSync(dir) && fs.mkdirSync(dir);
+  const win2 = new BrowserWindow({
+    height: 600,
+    width: 800
+  });
+  const fileName = "fullPrint" + new Date().getTime() + ".html";
+  fs.writeFileSync(dir + fileName, data[0]);
+  win2.title = dir + fileName;
+  win2.loadFile(dir + fileName);
+  win2.once('ready-to-show', () => {
+    win2.webContents.print();
+  })
+});
+
+ipcMain.on('check', (event, data: any) => {
+  const dir = path.join(app.getPath('documents'), "/checkBills/");
+  !fs.existsSync(dir) && fs.mkdirSync(dir);
+  const win2 = new BrowserWindow({
+    height: 600,
+    width: 400
+  });
+  const fileName = "print" + new Date().getTime() + ".html";
+  fs.writeFileSync(dir + fileName, data[0]);
+  win2.title = dir + fileName;
+  win2.loadFile(dir + fileName);
+  win2.once('ready-to-show', () => {
+    win2.webContents.print();
+  })
+});

@@ -3,6 +3,7 @@ import { DtoSystemInfo } from '../../../ipc-dtos/dtosysteminfo';
 import { Observable } from 'rxjs';
 import { Item } from './component/items/item.model';
 import { Table } from './component/tables/table.model';
+import { ItemData } from './cashier/add-item/add-item.component';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,10 @@ export class IpcService {
   }
 
   getData(){
-    window.api.electronIpcSend('get-data');
+    window.api.electronIpcSend('get-full-day-data');
     window.api.electronIpcOnce('data', (event,data)=>{
-      DataService.items = data.items;
-      DataService.tables = data.tables;
-      DataService.categories = data.categories;
+      DataService.fullDayData = (JSON.parse(data)[0]);
+      console.log(DataService.fullDayData);
     });
   }
 
@@ -40,7 +40,9 @@ export class DataService{
   public static items: Item[] = [];
   public static tables: Table[] = [];
   public static categories: string[] = [];
+  public static fullDayData: { [key: string]: ItemData[]}[] = [];
   public static save(path:string, data:any){
     window.api.electronIpcSend(path,data);
   }
+
 }

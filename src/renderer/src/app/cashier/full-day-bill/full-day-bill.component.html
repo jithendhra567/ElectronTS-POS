@@ -1,0 +1,20 @@
+<div class="main" style="padding: 20px;">
+  <div class="header">Full Day Information</div>
+  <div id="bill" style="padding: 50px;">
+    <table style="width:100%; margin: 30px; border: 1px solid #ddd; border-collapse: collapse;" *ngFor="let items of fullDayBill">
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Rate</th>
+        <th>Quantity</th>
+      </tr>
+      <tr *ngFor="let item of items">
+        <td style="border: 1px solid #ddd;">{{item.category}}</td>
+        <td style="border: 1px solid #ddd;">{{item.name}}</td>
+        <td style="border: 1px solid #ddd;">{{item.rate}}</td>
+        <td style="border: 1px solid #ddd;">{{item.quantity}}</td>
+      </tr>
+    </table>
+  </div>
+  <button mat-raised-button color="primary" (click)="print()">Print</button>
+</div>

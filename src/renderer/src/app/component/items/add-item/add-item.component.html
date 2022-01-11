@@ -12,7 +12,7 @@
   <mat-label>Select a category</mat-label>
   <mat-select [(ngModel)]="newItem['category']" required>
     <mat-option *ngFor="let category of categories" [value]="category">{{
-      category
+      category.name
     }}</mat-option>
   </mat-select>
 </mat-form-field>

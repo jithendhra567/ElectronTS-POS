@@ -17,7 +17,7 @@ export class AddItemComponent implements OnInit {
     image: ""
   };
 
-  categories: string[] = [];
+  categories: {name: string, image: string}[] = [];
 
   constructor(
     private is: ItemService,
@@ -40,7 +40,7 @@ export class AddItemComponent implements OnInit {
       width: '300px'
     })
     dialogRef.afterClosed().subscribe(data => {
-      if (data) this.is.addCategory(data);
+      if (data) this.is.addCategory(data.name, data.image);
     })
   }
 }

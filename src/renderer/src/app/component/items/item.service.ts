@@ -13,18 +13,17 @@ import { Item } from "./item.model";
   providedIn: "root",
 })
 export class ItemService implements OnInit {
-  public _categories = new BehaviorSubject<string[]>(DataService.categories);
-
-  private _items = new BehaviorSubject<Item[]>(DataService.items);
+  public _categories = new BehaviorSubject<{name: string, image: string}[]>([]);
+  private _items = new BehaviorSubject<Item[]>([]);
   itemData: AngularFirestoreCollection;
-  categoryData: AngularFirestoreDocument;
+  POS_DATA: AngularFirestoreDocument;
   itemLength: number = 0;
   itemInfo: any = [];
-  categoryInfo: any = [];
+  categoryData: { name: string, image: string }[] = [];
 
   constructor(private db: AngularFirestore) {
     this.itemData = this.db.collection("POS");
-    this.categoryData = this.db.collection("hotels").doc("POS");
+    this.POS_DATA = this.db.collection("hotels").doc("POS");
     this.fetchCategories();
     this.fetchItems();
   }
@@ -35,26 +34,76 @@ export class ItemService implements OnInit {
     return this._categories.asObservable();
   }
 
+  backup() {
+    this.db
+      .collection("POS_BACKUP")
+      .doc("categories")
+      .set({ categoriesData: this.categoryData })
+      .then(() => {
+        alert("Backup Successful");
+      });
+  }
+
+  getBackup() {
+    this.db
+      .collection("POS_BACKUP")
+      .doc("categories")
+      .get()
+      .subscribe((data) => {
+        const d:any = data.data();
+        if (!d) return;
+        this._categories.next(d.categoriesData);
+        //set categories to POS
+        this.POS_DATA
+          .update({ categoriesData: d["categoriesData"] })
+          .then(() => this.fetchCategories())
+          .catch((err) => {
+            //get data from pos
+            this.POS_DATA
+              .get()
+              .toPromise()
+              .then((data) => {
+                const d1:any = data.data();
+                if (!d1) return;
+                d1["categoriesData"] = d["categoriesData"];
+                this.POS_DATA
+                  .set(d1);
+              });
+          });
+      });
+  }
+
+
   fetchCategories() {
     var allCategories = [];
-    return this.categoryData
+    return this.POS_DATA
       .get()
       .toPromise()
       .then((data) => {
         if (data.data()) {
           const d: any = data.data();
-          allCategories = d["categories"] ?? [];
-          this.categoryInfo = allCategories;
-          this._categories.next(allCategories);
+          allCategories = d["categoriesData"] ?? [];
+          this.categoryData = [];
+          allCategories.forEach((val: { name: string, image: string }) => this.categoryData.push({ name: val.name, image: val.image }));
+          this._categories.next(this.categoryData);
         }
       })
       .catch((err) => console.log(err));
   }
 
-  addCategory(name: string) {
-    this.categoryInfo.push(name);
-    return this.categoryData
-      .set({ categories: this.categoryInfo }, { merge: true })
+
+
+  addCategory(name: string, image: string) {
+    this.categoryData.push({name: name, image: image});
+    return this.POS_DATA
+      .update({ categoriesData: this.categoryData })
+      .then(() => this.fetchCategories())
+      .catch((err) => console.log(err));
+  }
+
+  uploadData(categories: { name: string; image: string; }[]) {
+    return this.POS_DATA
+      .update({ categoriesData: categories })
       .then(() => this.fetchCategories())
       .catch((err) => console.log(err));
   }
@@ -75,21 +124,6 @@ export class ItemService implements OnInit {
         return newItems;
       })
     );
-  }
-
-  deleteCategories(cats: string[]) {
-    for (var i of cats) {
-      this.categoryInfo.forEach((el: any, id: any) => {
-        if (el === i) this.categoryInfo.splice(id, 1);
-      });
-    }
-    return this.categoryData
-      .set({ categories: this.categoryInfo }, { merge: false })
-      .then(() => {
-        console.log("Hello World");
-        this.fetchCategories();
-      })
-      .catch((err) => console.log(err));
   }
 
   get items() {
@@ -124,8 +158,34 @@ export class ItemService implements OnInit {
         });
         this._items.next(allItems);
         this.itemInfo = allItems;
+        // //get categories from all items
+        // this.categoryData = [];
+        // allItems.forEach(val => {
+        //   if (val.categoryName) {
+        //     this.categoryData.push({ name: val.categoryName, image: "" });
+        //   }
+        // });
+        // //get unique categories
+        // this.categoryData = this.arrUnique(this.categoryData);
+        // //upload categories to POS
+        // this.POS_DATA
+        //   .set({ categoriesData: this.categoryData })
+        //   .then(() => this.fetchCategories())
+        //   .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
+  }
+
+  arrUnique(arr:{name:string, image: string}[]) {
+    var cleaned:{name:string, image: string}[] = [];
+    arr.forEach(function(itm) {
+        var unique = true;
+        cleaned.forEach(function (itm2) {
+            if (itm.name === itm2.name && itm2.image === itm.image) unique = false;
+          });
+        if (unique)  cleaned.push(itm);
+    });
+    return cleaned;
   }
 
   addItem(name: string, cat: string, rate: number, image: string) {
@@ -144,7 +204,10 @@ export class ItemService implements OnInit {
     this.itemData
       .doc(iid)
       .set(item)
-      .then(() => this.fetchItems())
+      .then(() => {
+        this.fetchItems();
+        alert("Item Added"+iid);
+      })
       .catch((err) => console.log(err));
   }
 
@@ -162,7 +225,7 @@ export class ItemService implements OnInit {
     this.itemInfo[ind] = editedItem
     return this.itemData
       .doc(id)
-      .set(editedItem, { merge: false })
+      .set(editedItem)
       .then(() => this.fetchItems())
       .catch((err) => console.log(err));
   }

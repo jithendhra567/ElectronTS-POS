@@ -2,10 +2,10 @@
   <div class="nav-bar">
     <div class="expansion-panel-container">
       <h2 style="font-weight: 400; font-size: 18px; margin: 0; background-color: darkslategrey; color: white; border-radius: 4px; padding: 10px; text-align: center;">select a category</h2>
-      <div class="categories" *ngFor="let category of categories">
-        <button mat-raised-button class="category" (click)="displayItems(category)">
+      <div class="categories" >
+        <button *ngFor="let category of categories" mat-raised-button class="category" (click)="displayItems(category.name)">
           <mat-icon color="warn">label_important</mat-icon>
-          {{ category }}
+          {{ category.name }}
         </button>
       </div>
       <button mat-raised-button class="category" color="primary" (click)="displayAll()">
@@ -15,6 +15,14 @@
     </div>
     <div class="container">
       <div class="buttons">
+        <button mat-raised-button style="margin-left: 10px;" color="warn" (click)="getBackup()">
+          <mat-icon>backup</mat-icon>
+          get backup
+        </button>
+        <button mat-raised-button style="margin-left: 10px;" color="primary" (click)="backup()">
+          <mat-icon>backup</mat-icon>
+          backup
+        </button>
         <button mat-raised-button style="margin-left: 10px;" color="primary" (click)="addCategory()">
           <mat-icon>add</mat-icon>
           Add Category

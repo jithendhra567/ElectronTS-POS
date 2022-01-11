@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Table } from 'src/app/component/tables/table.model';
 import { TableService } from 'src/app/component/tables/table.service';
 
@@ -11,12 +12,15 @@ export class TableComponent implements OnInit {
 
   tables: Table[] = [];
 
-  constructor(private ts: TableService) { }
+  constructor(private ts: TableService, private db: AngularFirestore,) {
+    db.collection('hotels').doc('POS').valueChanges().subscribe(data => {
+      const val: any = data; //val: HotelDetais
+      this.tables = val.tables;
+    });
+  }
 
   ngOnInit() {
-    this.ts.tables.subscribe(tables => {
-      this.tables = tables
-    })
+
   }
 
 }

@@ -11,7 +11,7 @@
   <mat-label>Select a category</mat-label>
   <mat-select [(ngModel)]="itemData[0].categoryName" required>
     <mat-option *ngFor="let category of categories" [value]="category">{{
-      category
+      category.name
     }}</mat-option>
   </mat-select>
 </mat-form-field>
@@ -31,7 +31,7 @@
     <mat-icon>edit</mat-icon>
     Edit
   </button>
-  <button mat-raised-button color="secondary" (click)="closeDialog()">
+  <button mat-raised-button (click)="closeDialog()">
     <mat-icon>close</mat-icon>
     Close
   </button>

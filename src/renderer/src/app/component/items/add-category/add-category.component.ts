@@ -7,6 +7,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 })
 export class AddCategoryComponent {
 
+  name: string;
+  image: string;
   constructor(
     public dialogRef: MatDialogRef<AddCategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any

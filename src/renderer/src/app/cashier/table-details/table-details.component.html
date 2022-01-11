@@ -1,8 +1,14 @@
 <div class="main">
     <mat-toolbar class="tool-bar">
-        <div class="flex">
-            <button mat-icon-button routerLink="/cashier/regular"><mat-icon>arrow_back</mat-icon></button>
-            <h1 class="example-app-name">TABLE NO. {{tableNumber}}</h1>
+        <div class="flex" style="justify-content: space-between; width: 100%;">
+            <div class="flex">
+              <button mat-icon-button routerLink="/cashier/regular"><mat-icon>arrow_back</mat-icon></button>
+              <h1 class="example-app-name">TABLE NO. {{tableNumber}}</h1>
+            </div>
+            <div class="flex">
+              <button mat-raised-button color="primary" (click)="addDiscount()">discount</button>
+              <button mat-raised-button color="warn" style="margin-left: 10px;" (click)="deactivate()">deactivate</button>
+            </div>
         </div>
     </mat-toolbar>
     <div class="content">
@@ -11,27 +17,32 @@
                 <table mat-table [dataSource]="selectedItems" class="mat-elevation-z8">
                     <ng-container matColumnDef="id">
                         <th mat-header-cell *matHeaderCellDef> ID </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+                        <td mat-cell *matCellDef="let element"> {{ element.itemId }} </td>
                     </ng-container>
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef> Name </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+                        <td mat-cell *matCellDef="let element"> {{ element.itemName }} </td>
                     </ng-container>
                     <ng-container matColumnDef="category">
                         <th mat-header-cell *matHeaderCellDef> Category </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.category }} </td>
+                        <td mat-cell *matCellDef="let element"> {{ element.categoryName }} </td>
                     </ng-container>
                     <ng-container matColumnDef="rate">
-                        <th mat-header-cell *matHeaderCellDef> Rate </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.rate }} </td>
+                      <th mat-header-cell *matHeaderCellDef> Rate </th>
+                      <td mat-cell *matCellDef="let element">
+                        <div *ngIf="element.rate=='APS'">
+                          <input style="width: 40;" placeholder="Ex. 100" #rate [value]="0" (keyup)="updateRate(element,rate, $event)"/>
+                        </div>
+                        <div *ngIf="element.rate!='APS'">
+                          {{ element.rate }}
+                        </div>
+                      </td>
                     </ng-container>
                     <ng-container matColumnDef="quantity">
                       <th mat-header-cell *matHeaderCellDef> Quantity </th>
-                      <td mat-cell *matCellDef="let element"> <mat-form-field style="width: 50px;" appearance="fill">
-                        <mat-label>qty</mat-label>
-                        <input matInput placeholder="Ex. 1" #qty [value]="element.quantity" (keyup)="updateQty(element,qty)"/>
-                      </mat-form-field>
-                    </td>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.count }}
+                      </td>
                     </ng-container>
                     <ng-container matColumnDef="action">
                       <th mat-header-cell *matHeaderCellDef> Action </th>
@@ -82,9 +93,9 @@
                     display: flex;
                     justify-content: space-between;" *ngFor="let item of items">
                 <p class="name" style="margin: 0;
-                font-size: 14px;">{{item.name}}   x{{item.quantity}}</p>
+                font-size: 14px;">{{item.itemName}}   x{{item.count}}</p>
                 <p class="cost" style="margin: 0;
-                font-size: 14px;">{{item.rate*item.quantity}}/-</p>
+                font-size: 14px;">{{item.rate*item.count}}/-</p>
               </div>
               <div class="margin" style="background-color: rgba(0, 0, 0, 0.5);
                     width: 100%;
@@ -96,7 +107,7 @@
                   <p style="margin: 0;
                   font-size: 14px;">GST</p>
                   <p style="margin: 0;
-                  font-size: 14px;">--</p>
+                  font-size: 14px;">5%</p>
                 </div>
                 <div style="  margin-top: 10px;
                 display: flex;
@@ -104,7 +115,7 @@
                   <p style="margin: 0;
                   font-size: 14px;">discount</p>
                   <p style="margin: 0;
-                  font-size: 14px;">0</p>
+                  font-size: 14px;">{{discount}}</p>
                 </div>
                 <div style="  margin-top: 10px;
                 display: flex;
@@ -117,7 +128,14 @@
               </div>
             </div>
           </mat-card>
-          <button mat-raised-button color="primary" (click)="printBill(content)">PRINT</button>
+          <div style="display: flex;">
+            <button mat-raised-button color="primary" (click)="checkbill(content)">check bill</button>
+            <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="save()">save</button>
+          </div>
+          <div style="display: flex;">
+            <button mat-raised-button color="primary" (click)="printBill(content)">BOT</button>
+            <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="printBill(content)">KOT</button>
+          </div>
       </div>
     </div>
 

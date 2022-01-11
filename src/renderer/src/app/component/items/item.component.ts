@@ -21,7 +21,7 @@ import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
   styleUrls: ["./item.component.css"],
 })
 export class ItemComponent implements OnInit {
-  categories: string[] = [];
+  categories: { name: string, image: string}[] = [];
   public items: Item[] = [];
   public noCategoryItems: Item[] = [];
   prev_cat = "";
@@ -88,7 +88,7 @@ export class ItemComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((data) => {
       if (data) {
-        this.is.addCategory(data);
+        this.is.addCategory(data.name, data.image);
       }
     });
   }
@@ -107,7 +107,7 @@ export class ItemComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((data) => {
       if (data) {
-        this.is.addItem(data.name, data.category, data.rate, data.image);
+        this.is.addItem(data.name, data.category.name, data.rate, data.image);
       }
       this.displayItems(this.prev_cat);
     });
@@ -160,5 +160,13 @@ export class ItemComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
+  }
+
+  backup() {
+    this.is.backup();
+  }
+
+  getBackup() {
+    this.is.getBackup();
   }
 }

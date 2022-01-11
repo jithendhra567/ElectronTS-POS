@@ -11,6 +11,9 @@ import { TableComponent } from './table/table.component';
 import { TableDetailsComponent } from './table-details/table-details.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { ChairComponent } from './chair/chair.component';
+import { DiscountComponent } from './discount/discount.component';
+import { FormsModule } from '@angular/forms';
+import { FullDayBillComponent } from './full-day-bill/full-day-bill.component';
 
 @NgModule({
   declarations: [
@@ -21,12 +24,15 @@ import { ChairComponent } from './chair/chair.component';
     TableComponent,
     TableDetailsComponent,
     AddItemComponent,
-    ChairComponent
+    ChairComponent,
+    DiscountComponent,
+    FullDayBillComponent
   ],
   imports: [
     CommonModule,
     CashierRoutingModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule
   ]
 })
 export class CashierModule { }

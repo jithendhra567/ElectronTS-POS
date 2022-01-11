@@ -13,7 +13,7 @@ export class AssignCategoryComponent implements OnInit {
 
   categoryControl = new FormControl('', Validators.required)
 
-  categories: string[] = [];
+  categories: {name: string, image: string}[] = [];
   items: string[] = [];
 
   constructor(
@@ -34,7 +34,7 @@ export class AssignCategoryComponent implements OnInit {
       width: '300px'
     })
     dialogRef.afterClosed().subscribe(data => {
-      if(data)  this.is.addCategory(data);
+      if(data)  this.is.addCategory(data.name, data.image);
     })
   }
 

@@ -8,8 +8,8 @@ import { ItemService } from "../item.service";
   templateUrl: "./edit-categories.component.html",
 })
 export class EditCategoriesComponent implements OnInit {
-  categories: string[] = [];
-
+  categories: {name: string, image: string}[] = [];
+  deletedCategories: {name: string, image: string}[] = [];
   constructor(
     private dialog: MatDialog,
     private is: ItemService,
@@ -28,17 +28,23 @@ export class EditCategoriesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((data) => {
       if (data) {
-        this.is.addCategory(data);
+        this.is.addCategory(data.name, data.image);
       }
     });
   }
 
-  deleteCategories(options: any) {
-    let arr = [];
-    for (var i of options) {
-      arr.push(i.value);
-    }
-    this.is.deleteCategories(arr);
+  deleteCategory(name: string, image: string) {
+    //delete this name and image from categories
+    this.categories = this.categories.filter((category) => {
+      return category.name !== name && category.image !== image;
+    });
+  }
+
+  uploadData() {
+    this.is.uploadData(this.categories).then(() => {
+      alert('uploaded');
+      this.dialogRef.close();
+    });
   }
 
   dialogClose() {

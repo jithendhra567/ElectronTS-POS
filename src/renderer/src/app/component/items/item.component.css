@@ -29,6 +29,14 @@
 .category {
   margin: 5px 0;
   font-size: 14px;
+  text-align: left;
+}
+
+.categories{
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .item-table {
